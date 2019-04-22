@@ -4,7 +4,7 @@
 //
 //  Created by Paul Ventisei on 08/05/2016.
 //  Copyright © 2016 Paul Ventisei. All rights reserved.
-//
+//  Edited to check that the github link works
 
 import UIKit
 import CoreData
