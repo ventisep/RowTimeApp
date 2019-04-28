@@ -1,10 +1,10 @@
+platform :ios, '11.0'
+
+inhibit_all_warnings!
+
 target 'RowTime' do
-  platform :ios, '7.0'
-
-  pod 'GoogleAPIClientForREST'
-
-  # Also use GTMAppAuth. See the project wiki, you can use this or Google
-  # SignIn.
-  pod 'GTMAppAuth'
-
+    pod 'Firebase/Core', :inhibit_warnings => true
+    pod 'Firebase/Firestore', :inhibit_warnings => true
+    pod 'Firebase/Database', :inhibit_warnings => true
+    pod 'Firebase/Auth', :inhibit_warnings => true
 end

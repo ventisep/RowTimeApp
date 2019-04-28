@@ -7,43 +7,36 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		068C78B12276062A00771258 /* DataModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9B8C3C215823B6000D64D4 /* DataModels.swift */; };
+		068C78B22276062F00771258 /* EventData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA17C99B1D06148000C79F07 /* EventData.swift */; };
+		068C78B32276063200771258 /* CrewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA17C99D1D06996600C79F07 /* CrewData.swift */; };
+		068C78B42276063500771258 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA78F0871CDF77E900220E65 /* AppDelegate.swift */; };
+		068C78B62276063D00771258 /* EventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADB02F71CE3B48B003D0C27 /* EventTableViewController.swift */; };
+		068C78B72276064000771258 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADB02FC1CE3DD49003D0C27 /* EventTableViewCell.swift */; };
+		068C78B82276064300771258 /* CrewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA46D9511CDF7A3A0098D3D5 /* CrewTableViewController.swift */; };
+		068C78B92276065600771258 /* logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DADB032C1CED013B003D0C27 /* logo.jpg */; };
+		068C78BB2276066200771258 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA78F0911CDF77E900220E65 /* Assets.xcassets */; };
+		068C78BC2276066800771258 /* RowTime.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DA78F08E1CDF77E900220E65 /* RowTime.xcdatamodeld */; };
+		068C78BF227606F600771258 /* libPods-RowTime.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D23405EB68EA2DDFC96E3853 /* libPods-RowTime.a */; };
+		068C78C5227637C800771258 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 068C78C4227637C800771258 /* GoogleService-Info.plist */; };
 		11BADCECBBF1F49252F0F297 /* libPods-RowTime.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D23405EB68EA2DDFC96E3853 /* libPods-RowTime.a */; };
 		DA04B7511CF2CE8000EF570F /* TimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA04B7501CF2CE8000EF570F /* TimerViewController.swift */; };
 		DA04B7531CF36A8A00EF570F /* TimeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA04B7521CF36A8A00EF570F /* TimeTableViewCell.swift */; };
 		DA17C99C1D06148000C79F07 /* EventData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA17C99B1D06148000C79F07 /* EventData.swift */; };
 		DA17C99E1D06996600C79F07 /* CrewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA17C99D1D06996600C79F07 /* CrewData.swift */; };
-		DA39965321581B0F00A95EC4 /* CDCrew+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA39964821581B0C00A95EC4 /* CDCrew+CoreDataClass.swift */; };
-		DA39965421581B0F00A95EC4 /* CDRower+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA39964921581B0C00A95EC4 /* CDRower+CoreDataClass.swift */; };
-		DA39965521581B0F00A95EC4 /* CDRecordedTime+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA39964A21581B0D00A95EC4 /* CDRecordedTime+CoreDataClass.swift */; };
-		DA39965621581B0F00A95EC4 /* CDRecordedTime+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA39964B21581B0D00A95EC4 /* CDRecordedTime+CoreDataProperties.swift */; };
-		DA39965721581B0F00A95EC4 /* CDStage+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA39964C21581B0D00A95EC4 /* CDStage+CoreDataClass.swift */; };
-		DA39965821581B0F00A95EC4 /* CDCrew+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA39964D21581B0D00A95EC4 /* CDCrew+CoreDataProperties.swift */; };
-		DA39965921581B0F00A95EC4 /* CDRower+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA39964E21581B0E00A95EC4 /* CDRower+CoreDataProperties.swift */; };
-		DA39965A21581B0F00A95EC4 /* CDStage+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA39964F21581B0E00A95EC4 /* CDStage+CoreDataProperties.swift */; };
-		DA39965B21581B0F00A95EC4 /* CDEvent+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA39965021581B0E00A95EC4 /* CDEvent+CoreDataClass.swift */; };
-		DA39965C21581B0F00A95EC4 /* CDEvent+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA39965121581B0F00A95EC4 /* CDEvent+CoreDataProperties.swift */; };
 		DA46D9541CDF7A3A0098D3D5 /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA46D9501CDF7A3A0098D3D5 /* RatingControl.swift */; };
 		DA46D9551CDF7A3A0098D3D5 /* CrewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA46D9511CDF7A3A0098D3D5 /* CrewTableViewController.swift */; };
 		DA46D9571CDF7A3A0098D3D5 /* CrewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA46D9531CDF7A3A0098D3D5 /* CrewTableViewCell.swift */; };
-		DA57F99321530C47008B006A /* GTLRObservedtimesObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = DA57F98C21530C40008B006A /* GTLRObservedtimesObjects.m */; };
-		DA57F99421530C47008B006A /* GTLRObservedtimesService.m in Sources */ = {isa = PBXBuildFile; fileRef = DA57F98E21530C42008B006A /* GTLRObservedtimesService.m */; };
-		DA57F99521530C47008B006A /* GTLRObservedtimesQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = DA57F99221530C47008B006A /* GTLRObservedtimesQuery.m */; };
-		DA57F99721544D05008B006A /* GTLRObservedtimesObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = DA57F98C21530C40008B006A /* GTLRObservedtimesObjects.m */; };
-		DA57F99821544D0D008B006A /* GTLRObservedtimesService.m in Sources */ = {isa = PBXBuildFile; fileRef = DA57F98E21530C42008B006A /* GTLRObservedtimesService.m */; };
-		DA57F9A721544F4C008B006A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA78F0871CDF77E900220E65 /* AppDelegate.swift */; };
 		DA57F9B021545853008B006A /* (null) in Resources */ = {isa = PBXBuildFile; };
 		DA57F9B121545858008B006A /* (null) in Resources */ = {isa = PBXBuildFile; };
 		DA57F9B22154585B008B006A /* (null) in Resources */ = {isa = PBXBuildFile; };
 		DA57F9B32154585F008B006A /* (null) in Resources */ = {isa = PBXBuildFile; };
-		DA57F9B4215458C1008B006A /* GTLRObservedtimesQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = DA57F99221530C47008B006A /* GTLRObservedtimesQuery.m */; };
-		DA57F9B6215458F9008B006A /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DA78F0961CDF77E900220E65 /* Info.plist */; };
 		DA78F0881CDF77E900220E65 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA78F0871CDF77E900220E65 /* AppDelegate.swift */; };
 		DA78F08A1CDF77E900220E65 /* CrewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA78F0891CDF77E900220E65 /* CrewViewController.swift */; };
 		DA78F0901CDF77E900220E65 /* RowTime.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DA78F08E1CDF77E900220E65 /* RowTime.xcdatamodeld */; };
 		DA78F0921CDF77E900220E65 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA78F0911CDF77E900220E65 /* Assets.xcassets */; };
 		DA78F0951CDF77E900220E65 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA78F0931CDF77E900220E65 /* LaunchScreen.storyboard */; };
 		DA78F0A01CDF77E900220E65 /* RowTimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA78F09F1CDF77E900220E65 /* RowTimeTests.swift */; };
-		DA9B8C3B215821B9000D64D4 /* EventData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA17C99B1D06148000C79F07 /* EventData.swift */; };
 		DA9B8C3D215823B7000D64D4 /* DataModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9B8C3C215823B6000D64D4 /* DataModels.swift */; };
 		DABF771A2169167000E80D4E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF77192169167000E80D4E /* LoginViewController.swift */; };
 		DABF771B2169167000E80D4E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF77192169167000E80D4E /* LoginViewController.swift */; };
@@ -149,13 +142,9 @@
 		DADB02F81CE3B48B003D0C27 /* EventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADB02F71CE3B48B003D0C27 /* EventTableViewController.swift */; };
 		DADB02FD1CE3DD49003D0C27 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADB02FC1CE3DD49003D0C27 /* EventTableViewCell.swift */; };
 		DADB032D1CED013B003D0C27 /* logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DADB032C1CED013B003D0C27 /* logo.jpg */; };
-		DAF649BF21640C630093EEEE /* EventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADB02F71CE3B48B003D0C27 /* EventTableViewController.swift */; };
-		DAF649C021640C6C0093EEEE /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADB02FC1CE3DD49003D0C27 /* EventTableViewCell.swift */; };
-		DAF649C121640C720093EEEE /* CrewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA46D9511CDF7A3A0098D3D5 /* CrewTableViewController.swift */; };
 		DAF649C221640C780093EEEE /* CrewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA46D9531CDF7A3A0098D3D5 /* CrewTableViewCell.swift */; };
 		DAF649C321640C7D0093EEEE /* TimeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA04B7521CF36A8A00EF570F /* TimeTableViewCell.swift */; };
 		DAF649C421640C810093EEEE /* CrewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA78F0891CDF77E900220E65 /* CrewViewController.swift */; };
-		DAF649C521640C880093EEEE /* CrewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA17C99D1D06996600C79F07 /* CrewData.swift */; };
 		DAF649C621640C8D0093EEEE /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA46D9501CDF7A3A0098D3D5 /* RatingControl.swift */; };
 		DAF649C721640C920093EEEE /* TimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA04B7501CF2CE8000EF570F /* TimerViewController.swift */; };
 		DAF649C821640C970093EEEE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA78F0931CDF77E900220E65 /* LaunchScreen.storyboard */; };
@@ -173,6 +162,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		068C78C4227637C800771258 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4DB8986DB507EA152FABDC50 /* Pods-RowTime.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RowTime.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RowTime/Pods-RowTime.debug.xcconfig"; sourceTree = "<group>"; };
 		836375E55F180A97AFD39DDF /* Pods-RowTime.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RowTime.release.xcconfig"; path = "Pods/Target Support Files/Pods-RowTime/Pods-RowTime.release.xcconfig"; sourceTree = "<group>"; };
 		D23405EB68EA2DDFC96E3853 /* libPods-RowTime.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RowTime.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -180,26 +170,9 @@
 		DA04B7521CF36A8A00EF570F /* TimeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTableViewCell.swift; sourceTree = "<group>"; };
 		DA17C99B1D06148000C79F07 /* EventData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventData.swift; sourceTree = "<group>"; };
 		DA17C99D1D06996600C79F07 /* CrewData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrewData.swift; sourceTree = "<group>"; };
-		DA39964821581B0C00A95EC4 /* CDCrew+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDCrew+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		DA39964921581B0C00A95EC4 /* CDRower+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDRower+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		DA39964A21581B0D00A95EC4 /* CDRecordedTime+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDRecordedTime+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		DA39964B21581B0D00A95EC4 /* CDRecordedTime+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDRecordedTime+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
-		DA39964C21581B0D00A95EC4 /* CDStage+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDStage+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		DA39964D21581B0D00A95EC4 /* CDCrew+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDCrew+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
-		DA39964E21581B0E00A95EC4 /* CDRower+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDRower+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
-		DA39964F21581B0E00A95EC4 /* CDStage+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDStage+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
-		DA39965021581B0E00A95EC4 /* CDEvent+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDEvent+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		DA39965121581B0F00A95EC4 /* CDEvent+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDEvent+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		DA46D9501CDF7A3A0098D3D5 /* RatingControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
 		DA46D9511CDF7A3A0098D3D5 /* CrewTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrewTableViewController.swift; sourceTree = "<group>"; };
 		DA46D9531CDF7A3A0098D3D5 /* CrewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrewTableViewCell.swift; sourceTree = "<group>"; };
-		DA57F98C21530C40008B006A /* GTLRObservedtimesObjects.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTLRObservedtimesObjects.m; sourceTree = "<group>"; };
-		DA57F98D21530C40008B006A /* GTLRObservedtimesQuery.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTLRObservedtimesQuery.h; sourceTree = "<group>"; };
-		DA57F98E21530C42008B006A /* GTLRObservedtimesService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTLRObservedtimesService.m; sourceTree = "<group>"; };
-		DA57F98F21530C43008B006A /* GTLRObservedtimesService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTLRObservedtimesService.h; sourceTree = "<group>"; };
-		DA57F99021530C44008B006A /* GTLRObservedtimesObjects.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTLRObservedtimesObjects.h; sourceTree = "<group>"; };
-		DA57F99121530C46008B006A /* GTLRObservedtimes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTLRObservedtimes.h; sourceTree = "<group>"; };
-		DA57F99221530C47008B006A /* GTLRObservedtimesQuery.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTLRObservedtimesQuery.m; sourceTree = SOURCE_ROOT; };
 		DA78F0841CDF77E900220E65 /* RowTime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RowTime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA78F0871CDF77E900220E65 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA78F0891CDF77E900220E65 /* CrewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrewViewController.swift; sourceTree = "<group>"; };
@@ -330,6 +303,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				068C78BF227606F600771258 /* libPods-RowTime.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -353,29 +327,22 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		DA39964621581ADB00A95EC4 /* CoreDataFiles */ = {
+		DA39964621581ADB00A95EC4 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				DA39964821581B0C00A95EC4 /* CDCrew+CoreDataClass.swift */,
-				DA39964D21581B0D00A95EC4 /* CDCrew+CoreDataProperties.swift */,
-				DA39965021581B0E00A95EC4 /* CDEvent+CoreDataClass.swift */,
 				DA9B8C3C215823B6000D64D4 /* DataModels.swift */,
-				DA39965121581B0F00A95EC4 /* CDEvent+CoreDataProperties.swift */,
-				DA39964A21581B0D00A95EC4 /* CDRecordedTime+CoreDataClass.swift */,
-				DA39964B21581B0D00A95EC4 /* CDRecordedTime+CoreDataProperties.swift */,
-				DA39964921581B0C00A95EC4 /* CDRower+CoreDataClass.swift */,
-				DA39964E21581B0E00A95EC4 /* CDRower+CoreDataProperties.swift */,
-				DA39964C21581B0D00A95EC4 /* CDStage+CoreDataClass.swift */,
-				DA39964F21581B0E00A95EC4 /* CDStage+CoreDataProperties.swift */,
+				DA17C99B1D06148000C79F07 /* EventData.swift */,
+				DA17C99D1D06996600C79F07 /* CrewData.swift */,
 			);
-			path = CoreDataFiles;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		DA78F07B1CDF77E900220E65 = {
 			isa = PBXGroup;
 			children = (
-				DA39964621581ADB00A95EC4 /* CoreDataFiles */,
-				DA78F0861CDF77E900220E65 /* RowTime */,
+				DA78F0871CDF77E900220E65 /* AppDelegate.swift */,
+				DA39964621581ADB00A95EC4 /* Models */,
+				DA78F0861CDF77E900220E65 /* RowTime Controllers */,
 				DA78F09E1CDF77E900220E65 /* RowTimeTests */,
 				DA78F0851CDF77E900220E65 /* Products */,
 				80C314D1EAFEBEC7614C5E51 /* Pods */,
@@ -392,25 +359,16 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		DA78F0861CDF77E900220E65 /* RowTime */ = {
+		DA78F0861CDF77E900220E65 /* RowTime Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				DA57F99221530C47008B006A /* GTLRObservedtimesQuery.m */,
-				DA57F99021530C44008B006A /* GTLRObservedtimesObjects.h */,
-				DA57F98F21530C43008B006A /* GTLRObservedtimesService.h */,
-				DA57F98D21530C40008B006A /* GTLRObservedtimesQuery.h */,
-				DA57F98C21530C40008B006A /* GTLRObservedtimesObjects.m */,
-				DA57F99121530C46008B006A /* GTLRObservedtimes.h */,
-				DA57F98E21530C42008B006A /* GTLRObservedtimesService.m */,
-				DA78F0871CDF77E900220E65 /* AppDelegate.swift */,
+				068C78C4227637C800771258 /* GoogleService-Info.plist */,
 				DADB02F71CE3B48B003D0C27 /* EventTableViewController.swift */,
 				DADB02FC1CE3DD49003D0C27 /* EventTableViewCell.swift */,
 				DA46D9511CDF7A3A0098D3D5 /* CrewTableViewController.swift */,
 				DA46D9531CDF7A3A0098D3D5 /* CrewTableViewCell.swift */,
 				DA04B7521CF36A8A00EF570F /* TimeTableViewCell.swift */,
 				DA78F0891CDF77E900220E65 /* CrewViewController.swift */,
-				DA17C99B1D06148000C79F07 /* EventData.swift */,
-				DA17C99D1D06996600C79F07 /* CrewData.swift */,
 				DA46D9501CDF7A3A0098D3D5 /* RatingControl.swift */,
 				DA04B7501CF2CE8000EF570F /* TimerViewController.swift */,
 				DA78F0931CDF77E900220E65 /* LaunchScreen.storyboard */,
@@ -422,7 +380,7 @@
 				DA78F08E1CDF77E900220E65 /* RowTime.xcdatamodeld */,
 				DACC84281CFF72540004F275 /* blade-icons */,
 			);
-			name = RowTime;
+			name = "RowTime Controllers";
 			sourceTree = "<group>";
 		};
 		DA78F09E1CDF77E900220E65 /* RowTimeTests */ = {
@@ -550,6 +508,7 @@
 				DA78F0801CDF77E900220E65 /* Sources */,
 				DA78F0811CDF77E900220E65 /* Frameworks */,
 				DA78F0821CDF77E900220E65 /* Resources */,
+				1DA05E37FE620F6571F3C6A8 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -589,7 +548,7 @@
 					"New-1",
 				);
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Paul Ventisei";
 				TargetAttributes = {
 					DA78F0831CDF77E900220E65 = {
@@ -606,7 +565,7 @@
 			};
 			buildConfigurationList = DA78F07F1CDF77E900220E65 /* Build configuration list for PBXProject "RowTime" */;
 			compatibilityVersion = "Xcode 9.3";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -664,6 +623,7 @@
 				DACC84C21CFF72540004F275 /* nsc.gif in Resources */,
 				DADB032D1CED013B003D0C27 /* logo.jpg in Resources */,
 				DACC849E1CFF72540004F275 /* cox.gif in Resources */,
+				068C78C5227637C800771258 /* GoogleService-Info.plist in Resources */,
 				DACC84991CFF72540004F275 /* cco.gif in Resources */,
 				DA78F0951CDF77E900220E65 /* LaunchScreen.storyboard in Resources */,
 				DACC84C01CFF72540004F275 /* Nemisis-BC.gif in Resources */,
@@ -739,17 +699,40 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA57F9B6215458F9008B006A /* Info.plist in Resources */,
 				DAF649C921640CA30093EEEE /* Main.storyboard in Resources */,
 				DAF649C821640C970093EEEE /* LaunchScreen.storyboard in Resources */,
 				DA57F9B32154585F008B006A /* (null) in Resources */,
+				068C78B92276065600771258 /* logo.jpg in Resources */,
 				DA57F9B22154585B008B006A /* (null) in Resources */,
+				068C78BB2276066200771258 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1DA05E37FE620F6571F3C6A8 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RowTime/Pods-RowTime-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/gRPC/gRPCCertificates.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gRPCCertificates.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RowTime/Pods-RowTime-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		C503117BE01EB9520F507620 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -777,31 +760,18 @@
 			files = (
 				DABF771A2169167000E80D4E /* LoginViewController.swift in Sources */,
 				DA9B8C3D215823B7000D64D4 /* DataModels.swift in Sources */,
-				DA39965B21581B0F00A95EC4 /* CDEvent+CoreDataClass.swift in Sources */,
-				DA39965421581B0F00A95EC4 /* CDRower+CoreDataClass.swift in Sources */,
 				DA04B7531CF36A8A00EF570F /* TimeTableViewCell.swift in Sources */,
 				DA17C99C1D06148000C79F07 /* EventData.swift in Sources */,
 				DA46D9551CDF7A3A0098D3D5 /* CrewTableViewController.swift in Sources */,
 				DA46D9541CDF7A3A0098D3D5 /* RatingControl.swift in Sources */,
-				DA57F99421530C47008B006A /* GTLRObservedtimesService.m in Sources */,
-				DA39965621581B0F00A95EC4 /* CDRecordedTime+CoreDataProperties.swift in Sources */,
 				DA46D9571CDF7A3A0098D3D5 /* CrewTableViewCell.swift in Sources */,
-				DA39965C21581B0F00A95EC4 /* CDEvent+CoreDataProperties.swift in Sources */,
 				DA78F08A1CDF77E900220E65 /* CrewViewController.swift in Sources */,
-				DA39965A21581B0F00A95EC4 /* CDStage+CoreDataProperties.swift in Sources */,
 				DADB02FD1CE3DD49003D0C27 /* EventTableViewCell.swift in Sources */,
 				DADB02F81CE3B48B003D0C27 /* EventTableViewController.swift in Sources */,
 				DA04B7511CF2CE8000EF570F /* TimerViewController.swift in Sources */,
-				DA39965721581B0F00A95EC4 /* CDStage+CoreDataClass.swift in Sources */,
-				DA57F99321530C47008B006A /* GTLRObservedtimesObjects.m in Sources */,
 				DA78F0901CDF77E900220E65 /* RowTime.xcdatamodeld in Sources */,
 				DA78F0881CDF77E900220E65 /* AppDelegate.swift in Sources */,
-				DA39965521581B0F00A95EC4 /* CDRecordedTime+CoreDataClass.swift in Sources */,
-				DA39965321581B0F00A95EC4 /* CDCrew+CoreDataClass.swift in Sources */,
-				DA39965821581B0F00A95EC4 /* CDCrew+CoreDataProperties.swift in Sources */,
-				DA39965921581B0F00A95EC4 /* CDRower+CoreDataProperties.swift in Sources */,
 				DA17C99E1D06996600C79F07 /* CrewData.swift in Sources */,
-				DA57F99521530C47008B006A /* GTLRObservedtimesQuery.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -809,22 +779,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DAF649C121640C720093EEEE /* CrewTableViewController.swift in Sources */,
-				DAF649C021640C6C0093EEEE /* EventTableViewCell.swift in Sources */,
+				068C78B42276063500771258 /* AppDelegate.swift in Sources */,
 				DAF649C221640C780093EEEE /* CrewTableViewCell.swift in Sources */,
+				068C78B82276064300771258 /* CrewTableViewController.swift in Sources */,
+				068C78B12276062A00771258 /* DataModels.swift in Sources */,
+				068C78B22276062F00771258 /* EventData.swift in Sources */,
+				068C78B72276064000771258 /* EventTableViewCell.swift in Sources */,
 				DA78F0A01CDF77E900220E65 /* RowTimeTests.swift in Sources */,
 				DAF649C721640C920093EEEE /* TimerViewController.swift in Sources */,
-				DA9B8C3B215821B9000D64D4 /* EventData.swift in Sources */,
-				DAF649BF21640C630093EEEE /* EventTableViewController.swift in Sources */,
-				DA57F99721544D05008B006A /* GTLRObservedtimesObjects.m in Sources */,
-				DA57F9A721544F4C008B006A /* AppDelegate.swift in Sources */,
-				DAF649C521640C880093EEEE /* CrewData.swift in Sources */,
 				DAF649C321640C7D0093EEEE /* TimeTableViewCell.swift in Sources */,
-				DA57F99821544D0D008B006A /* GTLRObservedtimesService.m in Sources */,
+				068C78B32276063200771258 /* CrewData.swift in Sources */,
+				068C78BC2276066800771258 /* RowTime.xcdatamodeld in Sources */,
 				DABF771B2169167000E80D4E /* LoginViewController.swift in Sources */,
 				DAF649C421640C810093EEEE /* CrewViewController.swift in Sources */,
+				068C78B62276063D00771258 /* EventTableViewController.swift in Sources */,
 				DAF649C621640C8D0093EEEE /* RatingControl.swift in Sources */,
-				DA57F9B4215458C1008B006A /* GTLRObservedtimesQuery.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -863,6 +832,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -911,6 +881,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -919,6 +890,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -961,6 +933,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -984,7 +957,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.rowtime.RowTime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "RowTime-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1009,7 +982,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.rowtime.RowTime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "RowTime-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

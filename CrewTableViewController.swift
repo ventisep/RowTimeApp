@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import Firebase
 
 class CrewTableViewController: UITableViewController, UISearchResultsUpdating, UpdateableFromModel{
 
@@ -16,9 +17,9 @@ class CrewTableViewController: UITableViewController, UISearchResultsUpdating, U
     // MARK: Public Properties
     
     var event: Event?  = nil
-    var eventId = ""
+    var eventId: String = ""
     let crewData = CrewData()
-    var times = GTLRObservedtimes_RowTimePackageObservedTimeList()
+    var times: [RecordedTime]? = nil
     
     //TODO: incorporate selected event into the CrewData class so that it is initialised with a selected event and when that is changed then the crews are refreshed.  this will make the model self contained rather than having the event and eventid sitting outside on its own. and should also take timeslist and incorporate these into the crewdata.
     

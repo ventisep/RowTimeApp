@@ -94,11 +94,11 @@ class TimerViewController: UIViewController, UITextFieldDelegate, UITableViewDat
         
         //update the cell properties using the times array
         
-        if crew!.stages != nil{
-            cell.crewStage.text = (crew!.stages![time.stage] as AnyObject).label
-        }else {
-            cell.crewStage.text = String(time.stage)
-        }
+       // if crew!.stageTimes != nil{
+       //     cell.crewStage.text = (crew!.stageTimes![] as AnyObject).label
+       // }else {
+       //     cell.crewStage.text = String(time.stage)
+       // }
 
         
         // if the crew number field is empty set up the highlight the textfield to be completed
