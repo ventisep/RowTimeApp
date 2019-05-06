@@ -14,7 +14,9 @@ class Crew {
     
     // MARK: Properties
     
+    var eventRef: DocumentReference?
     var eventId: String = ""
+    var crewId: DocumentReference?
     var division: Int?
     var crewScheduledTime: Date?
     var crewNumber: Int = 0
@@ -32,7 +34,9 @@ class Crew {
     var recordedTimes: [RecordedTime]?
     var error: String?
     
-    init(eventId: String,
+    init(eventRef: DocumentReference?,
+         eventId: String,
+         crewId: DocumentReference?,
          crewNumber: Int,
          division: Int?,
          crewScheduledTime: Date?,
@@ -71,13 +75,15 @@ class Crew {
     
     //Initializer for creating a crew from the Dictionary that somes back from Firestore
     
-    init(fromServerCrew docSnapshot: DocumentSnapshot, eventId: String) {
+    init(fromServerCrew docSnapshot: DocumentSnapshot, eventId: String, eventRef: DocumentReference) {
         self.error = nil
         let value = docSnapshot.data() //is a Dictionary String
         // Conversion from string based dictionary follows pattern:
         // for optional values: self.testA = dictionary["testA"] as? String
         // for required values set a default: self.testC = dictionary["testC"] as? String ?? "default"
+        self.eventRef=eventRef
         self.eventId=eventId
+        self.crewId=docSnapshot.reference
         self.crewNumber = value["crewNumber"] as? Int ?? 0
         self.division = value["division"] as? Int
         self.crewScheduledTime=value["crewScheduledTime"] as? Date
@@ -183,18 +189,21 @@ class Stage: NSObject {
 //MARK: Event Models
 
 class Event: NSObject {
+    var eventRef: DocumentReference?
     var eventId: String = ""
     var eventDate: String = ""
     var eventName: String = ""
     var eventImage: UIImage?
     var eventDesc: String = ""
+    var timeRecorders: [String] = []
     
-    init?(eventId: String, eventDate: String, eventName: String, eventImage: UIImage?, eventDesc: String){
+    init?(eventId: String, eventDate: String, eventName: String, eventImage: UIImage?, eventDesc: String, timeRecorders: [String]){
         self.eventId=eventId
         self.eventDate=eventDate
         self.eventName=eventName
         self.eventImage=eventImage!
         self.eventDesc=eventDesc
+        self.timeRecorders=timeRecorders
 
     }
     
@@ -204,31 +213,32 @@ class Event: NSObject {
         // Conversion from string based dictionary follows pattern:
         // for optional values: self.testA = dictionary["testA"] as? String
         // for required values set a default: self.testC = dictionary["testC"] as? String ?? "default"
+        self.eventRef=docSnapshot.reference
         self.eventId=docSnapshot.documentID
         self.eventDate=value["eventDate"] as? String ?? ""
         self.eventName=value["eventName"] as? String ?? ""
         self.eventDesc=value["eventDesc"] as? String ?? ""
+        self.timeRecorders=value["timeRecorders"] as? [String] ?? ["none"]
     }
     
 }
 
 class RecordedTime: NSObject  {
+    let FirestoreDb = Firestore.firestore();
+    var crewId: DocumentReference?
     var crewNumber: Int? = 0
     var eventId: String = ""
     var obsType: Int = 0
     var stage: Int = 0
     var time: Date = Date(timeIntervalSince1970: 0)
-    var timeId: String = ""
     var timestamp: String? = ""
 
-    init?(crewNumber: Int?, eventId: String, obsType: Int, stage: Int, time: Date, timeId: String, timestamp: String?) {
+    init?(crewNumber: Int?, eventId: String, obsType: Int, stage: Int, time: Date, timeId: String) {
     self.crewNumber=crewNumber
     self.eventId=eventId
     self.obsType=obsType
     self.stage=stage
     self.time=time
-    self.timeId=timeId
-    self.timestamp=timestamp
     }
     
     init(fromServerRecordedTime docSnapshot: DocumentSnapshot){
@@ -236,13 +246,30 @@ class RecordedTime: NSObject  {
         // Conversion from string based dictionary follows pattern:
         // for optional values: self.testA = dictionary["testA"] as? String
         // for required values set a default: self.testC = dictionary["testC"] as? String ?? "default"
+        self.crewId = value["crewId"] as? DocumentReference
         self.crewNumber=value["crewNumber"] as? Int ?? 0
         self.eventId=(value["eventId"] as? String)!
         self.obsType=value["obsType"] as? Int ?? 0
         self.stage=value["stage"] as? Int ?? 0
         self.time=(value["time"] as? Date)!
-        self.timeId=value["timeId"] as? String ?? ""
         self.timestamp=value["timestamp"] as? String
+    }
+    
+    func addTime(toCrew: Crew) {
+        // Add a new document in collection "Times"
+        FirestoreDb.collection("Times").addDocument(data: ["crewId":toCrew.crewId,
+                                                           "crewNumber":self.crewNumber,
+                                                           "eventId":self.eventId,
+                                                           "obsType":self.obsType,
+                                                           "stage":self.stage,
+                                                           "time":self.time,
+                                                           "timestamp":FieldValue.serverTimestamp()]) { err in
+            if let err = err {
+                print("Error writing document: \(err)")
+            } else {
+                print("Document successfully written!")
+            }
+        }
     }
 }
     

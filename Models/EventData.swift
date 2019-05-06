@@ -24,10 +24,6 @@ protocol UpdateableFromModel {
 class EventData: NSObject {
     
     var events = [Event]()
-    var status: Status? = nil
-    enum Status {
-        case empty, noLocalData, updatingEventsFromRemoteServer, usingLocalData, usingRemoteData
-    }
     let FirestoreDb = Firestore.firestore();
     var delegate : UpdateableFromModel? = nil
     private let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -37,7 +33,6 @@ class EventData: NSObject {
         // add a listener to the firestore database
         FirestoreDb.collection("Events").order(by: "eventDate").addSnapshotListener { snapshot, error in
             self.delegate?.willUpdateModel() //tell the delegate that the model is about to be updated
-            self.status = .updatingEventsFromRemoteServer
             var newItems: [Event] = []
                 guard let snapshot = snapshot else {  //Optional assignment
                     print("Error fetching Events: \(error!)")
@@ -49,7 +44,6 @@ class EventData: NSObject {
                     // print("Firestore data: \(String(describing: event))")
                 }
                 self.events = newItems
-                self.status = .usingRemoteData
                 self.delegate?.didUpdateModel()
         }
         

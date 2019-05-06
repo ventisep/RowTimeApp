@@ -16,7 +16,6 @@
 		068C78B82276064300771258 /* CrewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA46D9511CDF7A3A0098D3D5 /* CrewTableViewController.swift */; };
 		068C78B92276065600771258 /* logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DADB032C1CED013B003D0C27 /* logo.jpg */; };
 		068C78BB2276066200771258 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA78F0911CDF77E900220E65 /* Assets.xcassets */; };
-		068C78BC2276066800771258 /* RowTime.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DA78F08E1CDF77E900220E65 /* RowTime.xcdatamodeld */; };
 		068C78BF227606F600771258 /* libPods-RowTime.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D23405EB68EA2DDFC96E3853 /* libPods-RowTime.a */; };
 		068C78C5227637C800771258 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 068C78C4227637C800771258 /* GoogleService-Info.plist */; };
 		11BADCECBBF1F49252F0F297 /* libPods-RowTime.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D23405EB68EA2DDFC96E3853 /* libPods-RowTime.a */; };
@@ -33,7 +32,6 @@
 		DA57F9B32154585F008B006A /* (null) in Resources */ = {isa = PBXBuildFile; };
 		DA78F0881CDF77E900220E65 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA78F0871CDF77E900220E65 /* AppDelegate.swift */; };
 		DA78F08A1CDF77E900220E65 /* CrewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA78F0891CDF77E900220E65 /* CrewViewController.swift */; };
-		DA78F0901CDF77E900220E65 /* RowTime.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DA78F08E1CDF77E900220E65 /* RowTime.xcdatamodeld */; };
 		DA78F0921CDF77E900220E65 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA78F0911CDF77E900220E65 /* Assets.xcassets */; };
 		DA78F0951CDF77E900220E65 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA78F0931CDF77E900220E65 /* LaunchScreen.storyboard */; };
 		DA78F0A01CDF77E900220E65 /* RowTimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA78F09F1CDF77E900220E65 /* RowTimeTests.swift */; };
@@ -163,6 +161,7 @@
 
 /* Begin PBXFileReference section */
 		068C78C4227637C800771258 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		06F662D0227F12CD00B79346 /* ToDo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToDo.h; sourceTree = "<group>"; };
 		4DB8986DB507EA152FABDC50 /* Pods-RowTime.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RowTime.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RowTime/Pods-RowTime.debug.xcconfig"; sourceTree = "<group>"; };
 		836375E55F180A97AFD39DDF /* Pods-RowTime.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RowTime.release.xcconfig"; path = "Pods/Target Support Files/Pods-RowTime/Pods-RowTime.release.xcconfig"; sourceTree = "<group>"; };
 		D23405EB68EA2DDFC96E3853 /* libPods-RowTime.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RowTime.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -176,7 +175,6 @@
 		DA78F0841CDF77E900220E65 /* RowTime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RowTime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA78F0871CDF77E900220E65 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA78F0891CDF77E900220E65 /* CrewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrewViewController.swift; sourceTree = "<group>"; };
-		DA78F08F1CDF77E900220E65 /* RowTime.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RowTime.xcdatamodel; sourceTree = "<group>"; };
 		DA78F0911CDF77E900220E65 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DA78F0941CDF77E900220E65 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DA78F0961CDF77E900220E65 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -341,6 +339,7 @@
 			isa = PBXGroup;
 			children = (
 				DA78F0871CDF77E900220E65 /* AppDelegate.swift */,
+				06F662D0227F12CD00B79346 /* ToDo.h */,
 				DA39964621581ADB00A95EC4 /* Models */,
 				DA78F0861CDF77E900220E65 /* RowTime Controllers */,
 				DA78F09E1CDF77E900220E65 /* RowTimeTests */,
@@ -377,7 +376,6 @@
 				DADB032C1CED013B003D0C27 /* logo.jpg */,
 				DA78F0961CDF77E900220E65 /* Info.plist */,
 				DA78F0911CDF77E900220E65 /* Assets.xcassets */,
-				DA78F08E1CDF77E900220E65 /* RowTime.xcdatamodeld */,
 				DACC84281CFF72540004F275 /* blade-icons */,
 			);
 			name = "RowTime Controllers";
@@ -769,7 +767,6 @@
 				DADB02FD1CE3DD49003D0C27 /* EventTableViewCell.swift in Sources */,
 				DADB02F81CE3B48B003D0C27 /* EventTableViewController.swift in Sources */,
 				DA04B7511CF2CE8000EF570F /* TimerViewController.swift in Sources */,
-				DA78F0901CDF77E900220E65 /* RowTime.xcdatamodeld in Sources */,
 				DA78F0881CDF77E900220E65 /* AppDelegate.swift in Sources */,
 				DA17C99E1D06996600C79F07 /* CrewData.swift in Sources */,
 			);
@@ -789,7 +786,6 @@
 				DAF649C721640C920093EEEE /* TimerViewController.swift in Sources */,
 				DAF649C321640C7D0093EEEE /* TimeTableViewCell.swift in Sources */,
 				068C78B32276063200771258 /* CrewData.swift in Sources */,
-				068C78BC2276066800771258 /* RowTime.xcdatamodeld in Sources */,
 				DABF771B2169167000E80D4E /* LoginViewController.swift in Sources */,
 				DAF649C421640C810093EEEE /* CrewViewController.swift in Sources */,
 				068C78B62276063D00771258 /* EventTableViewController.swift in Sources */,
@@ -1053,19 +1049,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		DA78F08E1CDF77E900220E65 /* RowTime.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				DA78F08F1CDF77E900220E65 /* RowTime.xcdatamodel */,
-			);
-			currentVersion = DA78F08F1CDF77E900220E65 /* RowTime.xcdatamodel */;
-			path = RowTime.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = DA78F07C1CDF77E900220E65 /* Project object */;
 }

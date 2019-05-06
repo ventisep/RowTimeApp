@@ -18,6 +18,7 @@ class CrewTableViewController: UITableViewController, UISearchResultsUpdating, U
     
     var event: Event?  = nil
     var eventId: String = ""
+    var eventRef: DocumentReference?
     let crewData = CrewData()
     var times: [RecordedTime]? = nil
     
@@ -54,7 +55,7 @@ class CrewTableViewController: UITableViewController, UISearchResultsUpdating, U
         
         definesPresentationContext = true
 
-        crewData.setEvent(newEventId: self.eventId)
+        crewData.setEvent(newEventId: self.eventId, eventRef: self.eventRef!)
     }
 
     @IBAction func RefreshControl(_ sender: UIRefreshControl, forEvent event: UIEvent) {
@@ -202,7 +203,7 @@ class CrewTableViewController: UITableViewController, UISearchResultsUpdating, U
                     timerViewController.crew = crewData.crews[(indexPath as NSIndexPath).row]
                 }
 
-                timerViewController.readOnly = true
+                timerViewController.event = event
                 timerViewController.eventId = eventId
             }
         }

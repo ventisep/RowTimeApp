@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 protocol InCellTextfieldProtocol {
     func didEndEditingCellTextfield(_ cell: TimeTableViewCell)
@@ -25,8 +26,11 @@ class TimerViewController: UIViewController, UITextFieldDelegate, UITableViewDat
     let notificationCenter = NotificationCenter.default
     
     var eventId: String = ""
-    var crew: Crew?
-    var readOnly: Bool = false //passed from crew list view if crew selected
+    var crew: Crew? // passed from crew list view when a crew is selected
+    var event: Event? //passed from crew list view when a crew it selected
+    var recordMode: Bool = false  //passed by the segue to allow record mode or view only mode
+    
+    let user = Auth.auth().currentUser
     
     var timeNow: String = "00:00:00.00" //String for the DigitalReadout
     var times = [RecordedTime]() //data for the TimeTableView
@@ -37,18 +41,20 @@ class TimerViewController: UIViewController, UITextFieldDelegate, UITableViewDat
         //handle the text fields through delegates
         
         CrewNumber.delegate = self
-        
-        if !readOnly {
+        if recordMode {
+            //the user is recording times
             //set the readout to the curent time
             //set interval to keep Digital Readout up to date with current time
             updateTime()
             Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
-        
         } else {
+            // the user is not recording times
             DigitalReadout.text = crew!.elapsedTime
-            times = (crew!.recordedTimes!)
+            if crew?.recordedTimes != nil {
+                times = (crew?.recordedTimes)!
+                //times to display for this crew or no crew given
+            }
         }
-        
         
         // Do any additional setup after loading the view.
     }
@@ -217,8 +223,9 @@ class TimerViewController: UIViewController, UITextFieldDelegate, UITableViewDat
     
     func recordTimeInTableAndServer(_ time: Date) {
         
-        let recordedTime1 = RecordedTime(crewNumber: Int(CrewNumber.text!), eventId: eventId,  obsType: 0, stage: 0, time: time, timeId: "RC1", timestamp: "tis")
+        let recordedTime1 = RecordedTime(crewNumber: Int(CrewNumber.text!), eventId: eventId,  obsType: 0, stage: 0, time: time, timeId: "RC1")
         
+        recordedTime1!.addTime(toCrew: crew!)
         times.insert(recordedTime1!, at: 0)
         
         let newIndexPath = IndexPath(row: 0, section: 0)

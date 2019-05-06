@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class EventTableViewController: UITableViewController, UpdateableFromModel {
 
@@ -120,8 +121,10 @@ class EventTableViewController: UITableViewController, UpdateableFromModel {
                 
                 let indexPath = tableView.indexPath(for: selectedEventCell)!
                 let selectedEvent = eventData.events[(indexPath as NSIndexPath).row].eventId
+                let selectedEventRef = eventData.events[(indexPath as NSIndexPath).row].eventRef
             
             crewTableViewController.eventId = selectedEvent
+            crewTableViewController.eventRef = selectedEventRef
             crewTableViewController.event = eventData.events[(indexPath as NSIndexPath).row]
 
             }
@@ -141,7 +144,6 @@ class EventTableViewController: UITableViewController, UpdateableFromModel {
     
     func willUpdateModel(){
         //called by EventData when it is abbout to update the list of events
-        print("got to willupdatemodel")
         refreshMarker.beginRefreshing()
 
     }
@@ -153,4 +155,13 @@ class EventTableViewController: UITableViewController, UpdateableFromModel {
 
     }
 
+    @IBAction func logout(_ sender: Any) {
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+            self.performSegue(withIdentifier: "unwindToLogin", sender: self)
+        } catch let signOutError as NSError {
+            print ("Error signing out: %@", signOutError)
+        }
+    }
 }
