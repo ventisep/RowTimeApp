@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import Firebase
 
-class CrewTableViewController: UITableViewController, UISearchResultsUpdating, UpdateableFromModel{
+class CrewTableViewController: UITableViewController, UISearchResultsUpdating, UpdateableFromFirestoreListener{
 
     
     
@@ -55,7 +55,7 @@ class CrewTableViewController: UITableViewController, UISearchResultsUpdating, U
         
         definesPresentationContext = true
 
-        crewData.setEvent(newEventId: self.eventId, eventRef: self.eventRef!)
+        crewData.setEventListener(newEventId: self.eventId, eventRef: self.eventRef!)
     }
 
     @IBAction func RefreshControl(_ sender: UIRefreshControl, forEvent event: UIEvent) {
@@ -207,10 +207,14 @@ class CrewTableViewController: UITableViewController, UISearchResultsUpdating, U
                 timerViewController.eventId = eventId
             }
         }
+        if segue.identifier == "addCrew" {
+            let crewViewController = segue.destination as! CrewViewController
+            crewViewController.event = event
+        }
     }
     
     @IBAction func unwindToCrewList(_ sender: UIStoryboardSegue){
-        if sender.identifier == "addCrew" {
+        if sender.identifier == "unwindAddCrew" {
             if let sourceViewController = sender.source as? CrewViewController, let crew = sourceViewController.crew {
                 
                 // Add a new crew.
@@ -219,6 +223,17 @@ class CrewTableViewController: UITableViewController, UISearchResultsUpdating, U
                 tableView.insertRows(at: [newIndexPath], with: .bottom)
             }
         }
+        self.tableView.reloadData()
+
+    }
+    
+    override func didMove(toParent parent: UIViewController?) {
+        if !(parent?.isEqual(self.parent) ?? false) {
+            print("Parent view loaded")
+            crewData.stopListening()
+        }
+
+        super.didMove(toParent: parent)
     }
     
     // MARK: - update from model

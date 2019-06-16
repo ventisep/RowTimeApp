@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class EventTableViewController: UITableViewController, UpdateableFromModel {
+class EventTableViewController: UITableViewController, UpdateableFromFirestoreListener {
 
     // MARK: Properties
     
@@ -58,11 +58,7 @@ class EventTableViewController: UITableViewController, UpdateableFromModel {
         // Fetches the appropriate crew for the data source layout.
         let event = eventData.events[(indexPath as NSIndexPath).row]
         
-        cell.event_id = event.eventId
-        cell.eventName.text = event.eventName
-        cell.eventImage.image = nil
-        cell.eventDate.text = String(event.eventDate)
-        cell.eventShortDescription.text = event.eventDesc
+        cell.set(event: event)
 
         return cell
     }
@@ -164,4 +160,10 @@ class EventTableViewController: UITableViewController, UpdateableFromModel {
             print ("Error signing out: %@", signOutError)
         }
     }
+    
+    @IBAction func unwindToEventList(_ unwindSegue: UIStoryboardSegue) {
+        let sourceViewController = unwindSegue.source
+        // Use data from the view controller which initiated the unwind segue
+    }
+
 }

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		06028E4422AADC3D00064A98 /* Pods-RowTime.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4DB8986DB507EA152FABDC50 /* Pods-RowTime.debug.xcconfig */; };
+		06028E4522AADC3E00064A98 /* Pods-RowTime.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4DB8986DB507EA152FABDC50 /* Pods-RowTime.debug.xcconfig */; };
+		06028E4622AADC4200064A98 /* Pods-RowTime.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 836375E55F180A97AFD39DDF /* Pods-RowTime.release.xcconfig */; };
+		06028E4722AADC4300064A98 /* Pods-RowTime.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 836375E55F180A97AFD39DDF /* Pods-RowTime.release.xcconfig */; };
 		068C78B12276062A00771258 /* DataModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9B8C3C215823B6000D64D4 /* DataModels.swift */; };
 		068C78B22276062F00771258 /* EventData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA17C99B1D06148000C79F07 /* EventData.swift */; };
 		068C78B32276063200771258 /* CrewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA17C99D1D06996600C79F07 /* CrewData.swift */; };
@@ -16,8 +20,9 @@
 		068C78B82276064300771258 /* CrewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA46D9511CDF7A3A0098D3D5 /* CrewTableViewController.swift */; };
 		068C78B92276065600771258 /* logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DADB032C1CED013B003D0C27 /* logo.jpg */; };
 		068C78BB2276066200771258 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA78F0911CDF77E900220E65 /* Assets.xcassets */; };
-		068C78BF227606F600771258 /* libPods-RowTime.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D23405EB68EA2DDFC96E3853 /* libPods-RowTime.a */; };
 		068C78C5227637C800771258 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 068C78C4227637C800771258 /* GoogleService-Info.plist */; };
+		0691ADC022B51C92000D964D /* Files.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0691ADBF22B51C92000D964D /* Files.swift */; };
+		0691ADC122B51C92000D964D /* Files.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0691ADBF22B51C92000D964D /* Files.swift */; };
 		11BADCECBBF1F49252F0F297 /* libPods-RowTime.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D23405EB68EA2DDFC96E3853 /* libPods-RowTime.a */; };
 		DA04B7511CF2CE8000EF570F /* TimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA04B7501CF2CE8000EF570F /* TimerViewController.swift */; };
 		DA04B7531CF36A8A00EF570F /* TimeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA04B7521CF36A8A00EF570F /* TimeTableViewCell.swift */; };
@@ -147,6 +152,7 @@
 		DAF649C721640C920093EEEE /* TimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA04B7501CF2CE8000EF570F /* TimerViewController.swift */; };
 		DAF649C821640C970093EEEE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA78F0931CDF77E900220E65 /* LaunchScreen.storyboard */; };
 		DAF649C921640CA30093EEEE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DACC84EF1D04D2910004F275 /* Main.storyboard */; };
+		ECA2DCF8DDF0A9F90C2777C1 /* libPods-RowTime.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D23405EB68EA2DDFC96E3853 /* libPods-RowTime.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -160,7 +166,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		06028E42228603A800064A98 /* functions */ = {isa = PBXFileReference; lastKnownFileType = folder; path = functions; sourceTree = "<group>"; };
+		06028E43228603A900064A98 /* firebase.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = firebase.json; sourceTree = "<group>"; };
 		068C78C4227637C800771258 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0691ADBF22B51C92000D964D /* Files.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Files.swift; sourceTree = "<group>"; };
 		06F662D0227F12CD00B79346 /* ToDo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToDo.h; sourceTree = "<group>"; };
 		4DB8986DB507EA152FABDC50 /* Pods-RowTime.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RowTime.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RowTime/Pods-RowTime.debug.xcconfig"; sourceTree = "<group>"; };
 		836375E55F180A97AFD39DDF /* Pods-RowTime.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RowTime.release.xcconfig"; path = "Pods/Target Support Files/Pods-RowTime/Pods-RowTime.release.xcconfig"; sourceTree = "<group>"; };
@@ -294,6 +303,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				11BADCECBBF1F49252F0F297 /* libPods-RowTime.a in Frameworks */,
+				ECA2DCF8DDF0A9F90C2777C1 /* libPods-RowTime.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,13 +311,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				068C78BF227606F600771258 /* libPods-RowTime.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0691ADBE22B51C41000D964D /* StorageAccess */ = {
+			isa = PBXGroup;
+			children = (
+				0691ADBF22B51C92000D964D /* Files.swift */,
+			);
+			path = StorageAccess;
+			sourceTree = "<group>";
+		};
 		7E6DDA0338839AC6A1348724 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -338,9 +355,12 @@
 		DA78F07B1CDF77E900220E65 = {
 			isa = PBXGroup;
 			children = (
+				06028E43228603A900064A98 /* firebase.json */,
+				06028E42228603A800064A98 /* functions */,
 				DA78F0871CDF77E900220E65 /* AppDelegate.swift */,
 				06F662D0227F12CD00B79346 /* ToDo.h */,
 				DA39964621581ADB00A95EC4 /* Models */,
+				0691ADBE22B51C41000D964D /* StorageAccess */,
 				DA78F0861CDF77E900220E65 /* RowTime Controllers */,
 				DA78F09E1CDF77E900220E65 /* RowTimeTests */,
 				DA78F0851CDF77E900220E65 /* Products */,
@@ -620,6 +640,7 @@
 				DACC84A41CFF72540004F275 /* Eton-RC.gif in Resources */,
 				DACC84C21CFF72540004F275 /* nsc.gif in Resources */,
 				DADB032D1CED013B003D0C27 /* logo.jpg in Resources */,
+				06028E4422AADC3D00064A98 /* Pods-RowTime.debug.xcconfig in Resources */,
 				DACC849E1CFF72540004F275 /* cox.gif in Resources */,
 				068C78C5227637C800771258 /* GoogleService-Info.plist in Resources */,
 				DACC84991CFF72540004F275 /* cco.gif in Resources */,
@@ -685,6 +706,7 @@
 				DACC84BB1CFF72540004F275 /* marlow-RC.gif in Resources */,
 				DACC84C91CFF72540004F275 /* pbd.gif in Resources */,
 				DACC84E21CFF72540004F275 /* trt.gif in Resources */,
+				06028E4622AADC4200064A98 /* Pods-RowTime.release.xcconfig in Resources */,
 				DACC84D71CFF72540004F275 /* St-Neots-RC.gif in Resources */,
 				DACC84DE1CFF72540004F275 /* swb.gif in Resources */,
 				DACC84D61CFF72540004F275 /* srg.gif in Resources */,
@@ -702,7 +724,9 @@
 				DA57F9B32154585F008B006A /* (null) in Resources */,
 				068C78B92276065600771258 /* logo.jpg in Resources */,
 				DA57F9B22154585B008B006A /* (null) in Resources */,
+				06028E4722AADC4300064A98 /* Pods-RowTime.release.xcconfig in Resources */,
 				068C78BB2276066200771258 /* Assets.xcassets in Resources */,
+				06028E4522AADC3E00064A98 /* Pods-RowTime.debug.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -765,6 +789,7 @@
 				DA46D9571CDF7A3A0098D3D5 /* CrewTableViewCell.swift in Sources */,
 				DA78F08A1CDF77E900220E65 /* CrewViewController.swift in Sources */,
 				DADB02FD1CE3DD49003D0C27 /* EventTableViewCell.swift in Sources */,
+				0691ADC022B51C92000D964D /* Files.swift in Sources */,
 				DADB02F81CE3B48B003D0C27 /* EventTableViewController.swift in Sources */,
 				DA04B7511CF2CE8000EF570F /* TimerViewController.swift in Sources */,
 				DA78F0881CDF77E900220E65 /* AppDelegate.swift in Sources */,
@@ -778,6 +803,7 @@
 			files = (
 				068C78B42276063500771258 /* AppDelegate.swift in Sources */,
 				DAF649C221640C780093EEEE /* CrewTableViewCell.swift in Sources */,
+				0691ADC122B51C92000D964D /* Files.swift in Sources */,
 				068C78B82276064300771258 /* CrewTableViewController.swift in Sources */,
 				068C78B12276062A00771258 /* DataModels.swift in Sources */,
 				068C78B22276062F00771258 /* EventData.swift in Sources */,
@@ -956,7 +982,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -980,7 +1006,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -996,7 +1022,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.rowtime.RowTimeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RowTime.app/RowTime";
 			};
 			name = Debug;
@@ -1013,7 +1039,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.rowtime.RowTimeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RowTime.app/RowTime";
 			};
 			name = Release;

@@ -8,6 +8,7 @@
 
 import XCTest
 import UIKit
+import Firebase
 
 
 class RowTimeTests: XCTestCase {

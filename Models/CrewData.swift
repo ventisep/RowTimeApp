@@ -14,17 +14,19 @@ class CrewData: NSObject {
     
     let FirestoreDb = Firestore.firestore();
     var crews: [Crew] = []
-    var delegate: UpdateableFromModel? = nil
+    var delegate: UpdateableFromFirestoreListener? = nil
 
     private var eventId: String = ""
     private var eventRef: DocumentReference?
     private var lastTimestamp: Date = Date(timeIntervalSince1970: 0)//first time set to old date to get everything
 
     private let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    private var crewListener: ListenerRegistration?
+    private var timeListener: ListenerRegistration?
 
     
     
-    func setEvent(newEventId: String, eventRef: DocumentReference) {
+    func setEventListener(newEventId: String, eventRef: DocumentReference) {
         
         //set the eventId to the newEventId and then process an update of the model
         
@@ -34,28 +36,47 @@ class CrewData: NSObject {
         // read all the crews for the selected event from Firebase and set a listener
         
         refreshCrews()
+        refreshTimes()
     
+    }
+    
+    func stopListening() { //function called to stop any listener before the crewData object goes out of scope
+        if crewListener != nil {crewListener!.remove()}
+        if timeListener != nil {timeListener!.remove()}
+        
     }
     
     //PV: a method for loading Crews and setting a listener for chages to the crews
     
     func refreshCrews() {
-        FirestoreDb.collection("Events").document(eventId).collection("Crews").order(by: "crewNumber").addSnapshotListener { snapshot, error in
-            self.delegate?.willUpdateModel() //tell the delegate that the model is about to be updated
-            var newItems: [Crew] = []
+        crewListener = FirestoreDb.collection("Events").document(eventId).collection("Crews").order(by: "crewNumber").addSnapshotListener { snapshot, error in
+
             guard let snapshot = snapshot else {  //Optional assignment
                 print("Error fetching Crews: \(error!)")
                 return
             }
+            self.delegate?.willUpdateModel() //tell the delegate that the model is about to be updated
             for data in snapshot.documents {
-                let crew = Crew(fromServerCrew: data, eventId: self.eventId, eventRef: self.eventRef!)
-                newItems.append(crew)
-                // print("Firestore data: \(String(describing: event))")
-            }
-            self.crews = newItems
+                let newCrew = Crew(fromServerCrew: data, eventId: self.eventId, eventRef: self.eventRef!)
+                if self.crews.count == 0 { //first crew found
+                    self.crews.append(newCrew)
+                    
+                } else { // check if we are updating or adding
+                    for oldCrew in self.crews {
+                        var nomatch = true
+                        if oldCrew.crewId == newCrew.crewId {
+                            oldCrew.updateCrewFromServer(fromServerCrew: data)
+                            nomatch = false
+                        }
+                        if nomatch { //new crew to be added to list
+                            self.crews.append(newCrew)
+                        }
+                    print("Firestore crew data: \(String(describing: newCrew))")
+                    }
+                }
             self.delegate?.didUpdateModel()
+            }
         }
-
     }
  
     //PV: a method for loading Times and setting a listener for changes to the times
@@ -65,24 +86,24 @@ class CrewData: NSObject {
         // now we have the crews we can get the times
         delegate?.willUpdateModel()
         
-        FirestoreDb.collection("Times").whereField("eventId", isEqualTo: eventId).order(by: "time").addSnapshotListener { snapshot, error in
+        timeListener = FirestoreDb.collection("Times").whereField("eventId", isEqualTo: eventId).order(by: "time").addSnapshotListener { snapshot, error in
             self.delegate?.willUpdateModel() //tell the delegate that the model is about to be updated
             var newItems: [RecordedTime] = []
             guard let snapshot = snapshot else {  //Optional assignment
-                print("Error fetching Crews: \(error!)")
+                print("Error fetching Times: \(error!)")
                 return
             }
             snapshot.documentChanges.forEach { diff in
+                let timesnapshot = RecordedTime(fromServerRecordedTime: diff.document)
                 if (diff.type == .added) {
-                    let timesnapshot = RecordedTime(fromServerRecordedTime: diff.document)
                     newItems.append(timesnapshot)
-                    print("time added data: \(String(describing: timesnapshot))")
+                    print("time added data: \(timesnapshot))")
                 }
-                if (diff.type == .modified) {
-                    print("time modified data diff: \(String(describing: diff))")
+                if (diff.type == .modified) { // this happens when the time comes back from the server after being written to the cache - there is nothing to do here but would be a good place to update a recording status of the time
+                    print("time came back from the server: \(String(describing: timesnapshot))")
                 }
-                if (diff.type == .removed) {
-                    print("time removed data diff: \(String(describing: diff))")
+                if (diff.type == .removed) { // this never happens
+                    print("time removed data diff: \(String(describing: timesnapshot))")
                 }
             }
             self.processTimes(newItems, crews: self.crews)

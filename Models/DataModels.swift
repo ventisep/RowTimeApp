@@ -29,10 +29,11 @@ class Crew {
     var endTimeLocal: Date?
     var startTimeLocal: Date?
     var stageTimes: Dictionary<String, Any>?
-    var inProgress: Bool?
-    var elapsedTime: String
-    var recordedTimes: [RecordedTime]?
-    var error: String?
+    var inProgress: Bool?  {if startTimeLocal != nil && endTimeLocal == nil {return true} else {return false}
+    } //calculated value
+    var elapsedTime: String { return self.calcElapsedTime()}//calculated value
+    var recordedTimes: [RecordedTime]? // added from Times
+    var error: String? // used to return errors
     
     init(eventRef: DocumentReference?,
          eventId: String,
@@ -50,7 +51,6 @@ class Crew {
          startTimeLocal: Date?,
          stageTimes: Dictionary<String, Any>?,
          inProgress: Bool?,
-         elapsedTime: String,
          recordedTimes: [RecordedTime]?) {
     
         // Initialize stored properties.
@@ -67,8 +67,6 @@ class Crew {
         self.endTimeLocal=endTimeLocal
         self.startTimeLocal=startTimeLocal
         self.stageTimes=stageTimes
-        self.inProgress=inProgress
-        self.elapsedTime=elapsedTime
         self.recordedTimes=recordedTimes
         self.error=nil
     }
@@ -96,67 +94,84 @@ class Crew {
         self.endTimeLocal=value["endTimeLocal"] as? Date
         self.startTimeLocal=value["startTimeLocal"] as? Date
         self.stageTimes=value["stageTimes"] as? Dictionary
-        self.inProgress=value["inProgress"] as? Bool
-        self.elapsedTime=value["crewNumber"] as? String ?? "Time TBD"
         self.recordedTimes=value["recordedTimes"] as? [RecordedTime]
     }
     
     
     // Methods for crew
     
-  func calcElapsedTime () {
+    func updateCrewFromServer (fromServerCrew docSnapshot: DocumentSnapshot) {
+        self.error = nil
+        let value = docSnapshot.data() //is a Dictionary String
+        // Conversion from string based dictionary follows pattern:
+        // for optional values: self.testA = dictionary["testA"] as? String
+        // for required values set a default: self.testC = dictionary["testC"] as? String ?? "default"
+        if self.crewId != docSnapshot.reference {self.error = "Crew reference on server record not the same as the crew object it is updating";
+            return
+        }
+        self.crewNumber = value["crewNumber"] as? Int ?? 0
+        self.division = value["division"] as? Int
+        self.crewScheduledTime=value["crewScheduledTime"] as? Date
+        self.crewName=value["crewName"] as? String ?? "Name Error"
+        self.picFile=value["picFile"] as? String
+        self.category=value["category"] as? String ?? "error"
+        self.rowerCount=value["rowerCount"] as? Int ?? 0
+        self.cox=value["cox"] as? String
+        self.rowers=value["rower1"] as? [String]
+        self.endTimeLocal=value["endTimeLocal"] as? Date
+        self.startTimeLocal=value["startTimeLocal"] as? Date
+        self.stageTimes=value["stageTimes"] as? Dictionary
+        // do not update the Times as this is a crew data updat only
+    }
+    
+    func calcElapsedTime () -> String {
         
         // TODO: This ignores milleseconds now.  have to add back in by adding to the NS dates I create
         
         let timeFormatter = DateFormatter()
         timeFormatter.dateFormat = "mm:ss.S"
+        timeFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        var returnString = ""
         
         if self.startTimeLocal == nil {
             //The Crew have not yet started
             
-            self.elapsedTime = "Not Started"
+            returnString = "Not Started"
             
         } else if self.endTimeLocal == nil {
             //The crew started but not finished show difference since start time to now
             
-            let elapsedNSTimeInterval=startTimeLocal!.timeIntervalSinceNow
-            self.elapsedTime = DateComponentsFormatter().string(from: elapsedNSTimeInterval)!
+            let elapsedNSTimeInterval = -1*startTimeLocal!.timeIntervalSinceNow
+            returnString = DateComponentsFormatter().string(from: elapsedNSTimeInterval)!
             
         } else if self.endTimeLocal != nil{
             //crew is finished calculate time between start and end time
             
             let elapsedNSTimeInterval=self.endTimeLocal!.timeIntervalSince(self.startTimeLocal!)
-            self.elapsedTime = timeFormatter.string(from: Date(timeIntervalSinceReferenceDate: elapsedNSTimeInterval))
+            returnString = timeFormatter.string(from: Date(timeIntervalSinceReferenceDate: elapsedNSTimeInterval)) //MARK: TODO: this is wrong in India where we run 30mins off GMT need to replace with my own function to calculate the displat time (as I did in javascript)
             
         }
+        return returnString
     }
     
     func updateStartTime (_ time: Date, type: Int) {
-        
         //type can be 0 = add, 1 = delete, 2 = has been invalidated so ignore
 
         if type == 0 { //add time
             self.startTimeLocal  = time
-            self.inProgress = true
+            self.endTimeLocal = nil // take out any previous end time
         } else if type == 1 {  //delete time
-            self.inProgress = false
             self.startTimeLocal = nil
         }
     }
 
-
-        
     func updateStopTime (_ time: Date, type: Int){
-        
         //type can be 0 = add, 1 = delete, 2 = has been invalidated so ignore
         
         if type == 0 { //add time
-            
             self.endTimeLocal  = time
-            self.inProgress = false
         } else if type == 1{ //delete time
-        self.endTimeLocal = nil
-        self.inProgress = true
+            self.endTimeLocal = nil
         }
     }
     
@@ -170,8 +185,9 @@ class Crew {
             self.updateStopTime(time.time, type: time.obsType)
         }
 
-        self.recordedTimes?.append(time)
-        self.calcElapsedTime()
+        if self.recordedTimes?.insert(time, at: 0) == nil { //if the first item to be added to the optional array
+            self.recordedTimes = [time]
+        }
     }
     
 }
@@ -193,15 +209,15 @@ class Event: NSObject {
     var eventId: String = ""
     var eventDate: String = ""
     var eventName: String = ""
-    var eventImage: UIImage?
+    var eventImage: String = ""
     var eventDesc: String = ""
     var timeRecorders: [String] = []
     
-    init?(eventId: String, eventDate: String, eventName: String, eventImage: UIImage?, eventDesc: String, timeRecorders: [String]){
+    init?(eventId: String, eventDate: String, eventName: String, eventImage: String, eventDesc: String, timeRecorders: [String]){
         self.eventId=eventId
         self.eventDate=eventDate
         self.eventName=eventName
-        self.eventImage=eventImage!
+        self.eventImage=eventImage
         self.eventDesc=eventDesc
         self.timeRecorders=timeRecorders
 
@@ -217,6 +233,7 @@ class Event: NSObject {
         self.eventId=docSnapshot.documentID
         self.eventDate=value["eventDate"] as? String ?? ""
         self.eventName=value["eventName"] as? String ?? ""
+        self.eventImage=value["eventImage"] as? String ?? ""
         self.eventDesc=value["eventDesc"] as? String ?? ""
         self.timeRecorders=value["timeRecorders"] as? [String] ?? ["none"]
     }
@@ -224,7 +241,7 @@ class Event: NSObject {
 }
 
 class RecordedTime: NSObject  {
-    let FirestoreDb = Firestore.firestore();
+
     var crewId: DocumentReference?
     var crewNumber: Int? = 0
     var eventId: String = ""
@@ -255,15 +272,15 @@ class RecordedTime: NSObject  {
         self.timestamp=value["timestamp"] as? String
     }
     
-    func addTime(toCrew: Crew) {
+    func addTime(toCrew: Crew, inDatabase: Firestore) {
         // Add a new document in collection "Times"
-        FirestoreDb.collection("Times").addDocument(data: ["crewId":toCrew.crewId,
-                                                           "crewNumber":self.crewNumber,
-                                                           "eventId":self.eventId,
-                                                           "obsType":self.obsType,
-                                                           "stage":self.stage,
-                                                           "time":self.time,
-                                                           "timestamp":FieldValue.serverTimestamp()]) { err in
+        inDatabase.collection("Times").addDocument(data: ["crewId":toCrew.crewId as Any,
+                                                          "crewNumber":self.crewNumber as Any,
+                                                          "eventId":self.eventId,
+                                                          "obsType":self.obsType,
+                                                          "stage":self.stage,
+                                                          "time":self.time,
+                                                          "timestamp":FieldValue.serverTimestamp()]) { err in
             if let err = err {
                 print("Error writing document: \(err)")
             } else {

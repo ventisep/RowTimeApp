@@ -16,7 +16,7 @@ import Foundation
 import Firebase
 
 
-protocol UpdateableFromModel {
+protocol UpdateableFromFirestoreListener {
     func didUpdateModel()
     func willUpdateModel()
 }
@@ -25,7 +25,7 @@ class EventData: NSObject {
     
     var events = [Event]()
     let FirestoreDb = Firestore.firestore();
-    var delegate : UpdateableFromModel? = nil
+    var delegate : UpdateableFromFirestoreListener? = nil
     private let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
     func loadEvents() {
@@ -41,7 +41,7 @@ class EventData: NSObject {
                 for data in snapshot.documents {
                     let event = Event(fromServerEvent: data)
                     newItems.append(event)
-                    // print("Firestore data: \(String(describing: event))")
+                    print("Firestore data: \(String(describing: event))")
                 }
                 self.events = newItems
                 self.delegate?.didUpdateModel()

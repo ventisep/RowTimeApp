@@ -18,10 +18,11 @@ class TimerViewController: UIViewController, UITextFieldDelegate, UITableViewDat
     @IBOutlet weak var DigitalReadout: UILabel!
     @IBOutlet weak var CrewNumber: UITextField!
     @IBOutlet weak var CrewName: UILabel!
+    @IBOutlet weak var CrewStage: UILabel!
     
-
     @IBOutlet weak var TimeTable: UITableView!
-    @IBOutlet weak var RecordButton: UIButton!
+    @IBOutlet weak var startButton: UIButton!
+    @IBOutlet weak var endButton: UIButton!
     
     let notificationCenter = NotificationCenter.default
     
@@ -31,22 +32,28 @@ class TimerViewController: UIViewController, UITextFieldDelegate, UITableViewDat
     var recordMode: Bool = false  //passed by the segue to allow record mode or view only mode
     
     let user = Auth.auth().currentUser
+    let FirestoreDb = Firestore.firestore();
+
     
-    var timeNow: String = "00:00:00.00" //String for the DigitalReadout
+    
+    var displayTime: String = "00:00:00.00" //String for the DigitalReadout
     var times = [RecordedTime]() //data for the TimeTableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //handle the text fields through delegates
-        
+        CrewNumber.text = String(crew!.crewNumber)
         CrewNumber.delegate = self
         if recordMode {
             //the user is recording times
-            //set the readout to the curent time
+            //set the readout to the current time
             //set interval to keep Digital Readout up to date with current time
-            updateTime()
-            Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
+            updateDisplayTime()
+            Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateDisplayTime), userInfo: nil, repeats: true)
+            if crew?.recordedTimes != nil {
+                times = (crew?.recordedTimes)!
+            }
         } else {
             // the user is not recording times
             DigitalReadout.text = crew!.elapsedTime
@@ -59,12 +66,12 @@ class TimerViewController: UIViewController, UITextFieldDelegate, UITableViewDat
         // Do any additional setup after loading the view.
     }
     
-    @objc func updateTime(){
+    @objc func updateDisplayTime(){
         //set the readout to the curent time
         let timeFormatForReadout = DateFormatter()
         timeFormatForReadout.dateFormat = "HH:mm:ss"
-        timeNow = timeFormatForReadout.string(from: Date())
-        DigitalReadout.text = timeNow
+        displayTime = timeFormatForReadout.string(from: Date())
+        DigitalReadout.text = displayTime
         
     }
     
@@ -98,7 +105,7 @@ class TimerViewController: UIViewController, UITextFieldDelegate, UITableViewDat
         let time = times[(indexPath as NSIndexPath).row]
         //print (" print: \(String(describing: time))")
         
-        //update the cell properties using the times array
+        //MARK: TODO this needs some work - update the cell properties using the times array
         
        // if crew!.stageTimes != nil{
        //     cell.crewStage.text = (crew!.stageTimes![] as AnyObject).label
@@ -118,11 +125,17 @@ class TimerViewController: UIViewController, UITextFieldDelegate, UITableViewDat
             cell.crewNumberInput.text = String(time.crewNumber!)
         }
         
+        var tempStage: String { if time.stage == 0 {return "started @ "} else {return "finshed @ "}
+        }
+        
+        cell.crewStage.text = tempStage
+            
+
         let timeFormat = DateFormatter()
         timeFormat.dateFormat = "HH:mm:ss.SSS"
-        timeNow = timeFormat.string(from: time.time as Date)
+        displayTime = timeFormat.string(from: time.time as Date)
 
-        cell.crewTime.text = timeNow
+        cell.crewTime.text = displayTime
         
         //update cell properties if observation type is 2 which means it is a cencelled time
         if time.obsType == 2{
@@ -184,7 +197,7 @@ class TimerViewController: UIViewController, UITextFieldDelegate, UITableViewDat
     func didEndEditingCellTextfield(_ cell: TimeTableViewCell) {
         
         //get the index path for the cell updated and update the times array
-        // MARK: TODO here is where to add the code to record the time if not already recorded. (add a status field to the RecordedTime class 
+    
         let indexPathAtTap = TimeTable.indexPath(for: cell)
         if cell.crewNumberInput.text != "" {
             times[(indexPathAtTap! as NSIndexPath).row].crewNumber = Int(cell.crewNumberInput.text!)
@@ -203,35 +216,47 @@ class TimerViewController: UIViewController, UITextFieldDelegate, UITableViewDat
         let timeButtonPressed = Date()
         let timeFormatForReadout = DateFormatter()
         timeFormatForReadout.dateFormat = "HH:mm:ss.SSS"
-        timeNow = timeFormatForReadout.string(from: timeButtonPressed)
+        var stage: Int = 0
+        //MARK: TODO thiscould be more sophisticated using a enum or dictionary from the event class on stages
+        if sender == startButton {
+            stage = 0
+        } else {
+            stage = 1
+        }
+        displayTime = timeFormatForReadout.string(from: timeButtonPressed)
         
         //Stop the clock counting and show the time just recorded, restart the Clock in 3 seconds after the freezing of it
         //MARK:  TODO put in the stop of the clock and set interval to restart it
         
-        DigitalReadout.text = timeNow
+        DigitalReadout.text = displayTime
 
     
         //Add a time to the times array and refresh the timeTableView
         
-        recordTimeInTableAndServer(timeButtonPressed)
+        recordTimeInTableAndServer(time: timeButtonPressed, stage: stage)
         
         //clear the crewNumber field to prevent accidental re-entry of same crew
         
-        CrewNumber.text = ""
+        //CrewNumber.text = ""
         
     }
     
-    func recordTimeInTableAndServer(_ time: Date) {
+    func recordTimeInTableAndServer(time: Date, stage: Int) {
         
-        let recordedTime1 = RecordedTime(crewNumber: Int(CrewNumber.text!), eventId: eventId,  obsType: 0, stage: 0, time: time, timeId: "RC1")
+        let recordedTime1 = RecordedTime(crewNumber: Int(CrewNumber.text!), eventId: eventId,  obsType: 0, stage: stage, time: time, timeId: "RC1")
         
-        recordedTime1!.addTime(toCrew: crew!)
+        recordedTime1!.addTime(toCrew: crew!, inDatabase: FirestoreDb)
         times.insert(recordedTime1!, at: 0)
         
         let newIndexPath = IndexPath(row: 0, section: 0)
         TimeTable.insertRows(at: [newIndexPath], with: .bottom)
 
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+    }
+
 
     /*
     // MARK: - Navigation
