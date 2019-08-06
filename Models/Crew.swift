@@ -1,12 +1,12 @@
 //
-//  RowingClub.swift
+//  File.swift
 //  RowTime
 //
-//  Created by Paul Ventisei on 05/05/2016.
-//  Copyright © 2016 Paul Ventisei. All rights reserved.
-//  change to force a copy to the version control system
+//  Created by Paul Ventisei on 16/06/2019.
+//  Copyright © 2019 Paul Ventisei. All rights reserved.
+//
 
-import UIKit
+import Foundation
 import Firebase
 
 
@@ -33,7 +33,6 @@ class Crew {
     } //calculated value
     var elapsedTime: String { return self.calcElapsedTime()}//calculated value
     var recordedTimes: [RecordedTime]? // added from Times
-    var error: String? // used to return errors
     
     init(eventRef: DocumentReference?,
          eventId: String,
@@ -52,7 +51,7 @@ class Crew {
          stageTimes: Dictionary<String, Any>?,
          inProgress: Bool?,
          recordedTimes: [RecordedTime]?) {
-    
+        
         // Initialize stored properties.
         self.eventId=eventId
         self.crewNumber=crewNumber
@@ -68,13 +67,11 @@ class Crew {
         self.startTimeLocal=startTimeLocal
         self.stageTimes=stageTimes
         self.recordedTimes=recordedTimes
-        self.error=nil
     }
     
-    //Initializer for creating a crew from the Dictionary that somes back from Firestore
+    //MARK: Initializers for creating a crew from the Dictionary that somes back from Firestore
     
     init(fromServerCrew docSnapshot: DocumentSnapshot, eventId: String, eventRef: DocumentReference) {
-        self.error = nil
         let value = docSnapshot.data() //is a Dictionary String
         // Conversion from string based dictionary follows pattern:
         // for optional values: self.testA = dictionary["testA"] as? String
@@ -98,17 +95,15 @@ class Crew {
     }
     
     
-    // Methods for crew
+    // MARK: Public Methods for crew
     
+    // update the crew object from new information recieved from the server.  Not initialising - updating
     func updateCrewFromServer (fromServerCrew docSnapshot: DocumentSnapshot) {
-        self.error = nil
         let value = docSnapshot.data() //is a Dictionary String
         // Conversion from string based dictionary follows pattern:
         // for optional values: self.testA = dictionary["testA"] as? String
         // for required values set a default: self.testC = dictionary["testC"] as? String ?? "default"
-        if self.crewId != docSnapshot.reference {self.error = "Crew reference on server record not the same as the crew object it is updating";
-            return
-        }
+
         self.crewNumber = value["crewNumber"] as? Int ?? 0
         self.division = value["division"] as? Int
         self.crewScheduledTime=value["crewScheduledTime"] as? Date
@@ -121,16 +116,33 @@ class Crew {
         self.endTimeLocal=value["endTimeLocal"] as? Date
         self.startTimeLocal=value["startTimeLocal"] as? Date
         self.stageTimes=value["stageTimes"] as? Dictionary
-        // do not update the Times as this is a crew data updat only
+        // do not update the Times as this is a crew data update only
     }
     
-    func calcElapsedTime () -> String {
+    
+    func processTime(_ time: RecordedTime){
+        
+        if time.stage == 0 { //start time
+            self.updateStartTime(time.time, type: time.obsType)
+        }
+        else if time.stage == 1 {
+            //end time
+            self.updateStopTime(time.time, type: time.obsType)
+        }
+        
+        if self.recordedTimes?.insert(time, at: 0) == nil { //if the first item to be added to the optional array
+            self.recordedTimes = [time]
+        }
+    }
+    
+    //MARK: Private Methods
+    private func calcElapsedTime () -> String {
         
         // TODO: This ignores milleseconds now.  have to add back in by adding to the NS dates I create
         
         let timeFormatter = DateFormatter()
         timeFormatter.dateFormat = "mm:ss.S"
-        timeFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        timeFormatter.timeZone = TimeZone(secondsFromGMT: 0) //need this to ensure if operating in timezones that are 30m off GMT the calculations still work
         var returnString = ""
         
         if self.startTimeLocal == nil {
@@ -148,15 +160,14 @@ class Crew {
             //crew is finished calculate time between start and end time
             
             let elapsedNSTimeInterval=self.endTimeLocal!.timeIntervalSince(self.startTimeLocal!)
-            returnString = timeFormatter.string(from: Date(timeIntervalSinceReferenceDate: elapsedNSTimeInterval)) //MARK: TODO: this is wrong in India where we run 30mins off GMT need to replace with my own function to calculate the displat time (as I did in javascript)
-            
+            returnString = timeFormatter.string(from: Date(timeIntervalSinceReferenceDate: elapsedNSTimeInterval))
         }
         return returnString
     }
     
-    func updateStartTime (_ time: Date, type: Int) {
+    private func updateStartTime (_ time: Date, type: Int) {
         //type can be 0 = add, 1 = delete, 2 = has been invalidated so ignore
-
+        
         if type == 0 { //add time
             self.startTimeLocal  = time
             self.endTimeLocal = nil // take out any previous end time
@@ -164,8 +175,8 @@ class Crew {
             self.startTimeLocal = nil
         }
     }
-
-    func updateStopTime (_ time: Date, type: Int){
+    
+    private func updateStopTime (_ time: Date, type: Int){
         //type can be 0 = add, 1 = delete, 2 = has been invalidated so ignore
         
         if type == 0 { //add time
@@ -174,119 +185,6 @@ class Crew {
             self.endTimeLocal = nil
         }
     }
-    
-    func processTime(_ time: RecordedTime){
 
-        if time.stage == 0 { //start time
-            self.updateStartTime(time.time, type: time.obsType)
-        }
-        else if time.stage == 1 {
-            //end time
-            self.updateStopTime(time.time, type: time.obsType)
-        }
-
-        if self.recordedTimes?.insert(time, at: 0) == nil { //if the first item to be added to the optional array
-            self.recordedTimes = [time]
-        }
-    }
     
 }
-
-class Stage: NSObject {
-    var label: String
-    var stageIndex: Int
-    
-    init?(label: String, stageIndex: Int){
-        self.label=label
-        self.stageIndex=stageIndex
-    }
-}
-
-//MARK: Event Models
-
-class Event: NSObject {
-    var eventRef: DocumentReference?
-    var eventId: String = ""
-    var eventDate: String = ""
-    var eventName: String = ""
-    var eventImage: String = ""
-    var eventDesc: String = ""
-    var timeRecorders: [String] = []
-    
-    init?(eventId: String, eventDate: String, eventName: String, eventImage: String, eventDesc: String, timeRecorders: [String]){
-        self.eventId=eventId
-        self.eventDate=eventDate
-        self.eventName=eventName
-        self.eventImage=eventImage
-        self.eventDesc=eventDesc
-        self.timeRecorders=timeRecorders
-
-    }
-    
-     
-    init(fromServerEvent docSnapshot: DocumentSnapshot){
-        let value = docSnapshot.data() //is a Dictionary String
-        // Conversion from string based dictionary follows pattern:
-        // for optional values: self.testA = dictionary["testA"] as? String
-        // for required values set a default: self.testC = dictionary["testC"] as? String ?? "default"
-        self.eventRef=docSnapshot.reference
-        self.eventId=docSnapshot.documentID
-        self.eventDate=value["eventDate"] as? String ?? ""
-        self.eventName=value["eventName"] as? String ?? ""
-        self.eventImage=value["eventImage"] as? String ?? ""
-        self.eventDesc=value["eventDesc"] as? String ?? ""
-        self.timeRecorders=value["timeRecorders"] as? [String] ?? ["none"]
-    }
-    
-}
-
-class RecordedTime: NSObject  {
-
-    var crewId: DocumentReference?
-    var crewNumber: Int? = 0
-    var eventId: String = ""
-    var obsType: Int = 0
-    var stage: Int = 0
-    var time: Date = Date(timeIntervalSince1970: 0)
-    var timestamp: String? = ""
-
-    init?(crewNumber: Int?, eventId: String, obsType: Int, stage: Int, time: Date, timeId: String) {
-    self.crewNumber=crewNumber
-    self.eventId=eventId
-    self.obsType=obsType
-    self.stage=stage
-    self.time=time
-    }
-    
-    init(fromServerRecordedTime docSnapshot: DocumentSnapshot){
-        let value = docSnapshot.data() //is a Dictionary String
-        // Conversion from string based dictionary follows pattern:
-        // for optional values: self.testA = dictionary["testA"] as? String
-        // for required values set a default: self.testC = dictionary["testC"] as? String ?? "default"
-        self.crewId = value["crewId"] as? DocumentReference
-        self.crewNumber=value["crewNumber"] as? Int ?? 0
-        self.eventId=(value["eventId"] as? String)!
-        self.obsType=value["obsType"] as? Int ?? 0
-        self.stage=value["stage"] as? Int ?? 0
-        self.time=(value["time"] as? Date)!
-        self.timestamp=value["timestamp"] as? String
-    }
-    
-    func addTime(toCrew: Crew, inDatabase: Firestore) {
-        // Add a new document in collection "Times"
-        inDatabase.collection("Times").addDocument(data: ["crewId":toCrew.crewId as Any,
-                                                          "crewNumber":self.crewNumber as Any,
-                                                          "eventId":self.eventId,
-                                                          "obsType":self.obsType,
-                                                          "stage":self.stage,
-                                                          "time":self.time,
-                                                          "timestamp":FieldValue.serverTimestamp()]) { err in
-            if let err = err {
-                print("Error writing document: \(err)")
-            } else {
-                print("Document successfully written!")
-            }
-        }
-    }
-}
-    

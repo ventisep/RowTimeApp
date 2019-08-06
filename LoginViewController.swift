@@ -28,7 +28,7 @@ class LoginViewController: UIViewController {
                 self.performSegue(withIdentifier: "loginToNavigation", sender: nil)
                 self.userName.text = nil
                 self.password.text = nil
-                print("user data \(user!.email)")
+                print("user data \(String(describing: user!.email))")
             }
         }
         

@@ -10,45 +10,46 @@ import Foundation
 import Firebase
 
 
-class CrewData: NSObject {
+class CrewData: NSObject, UpdateableFromFirestoreListener{
+
+
+    
     
     let FirestoreDb = Firestore.firestore();
     var crews: [Crew] = []
+    var timeData = TimeData()
     var delegate: UpdateableFromFirestoreListener? = nil
 
     private var eventId: String = ""
     private var eventRef: DocumentReference?
-    private var lastTimestamp: Date = Date(timeIntervalSince1970: 0)//first time set to old date to get everything
 
-    private let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    //private let appDelegate = UIApplication.shared.delegate as! AppDelegate
     private var crewListener: ListenerRegistration?
-    private var timeListener: ListenerRegistration?
-
     
-    
-    func setEventListener(newEventId: String, eventRef: DocumentReference) {
+    func setCrewListener(forEventId: String, eventRef: DocumentReference) {
         
         //set the eventId to the newEventId and then process an update of the model
         
-        eventId = newEventId
+        eventId = forEventId
         self.eventRef = eventRef
 
-        // read all the crews for the selected event from Firebase and set a listener
-        
+        // 1. read all the crews for the selected event from Firebase and set a listener.
+        // 2. set this object as the delegate for TimeData service which will be called when the crews have been recieved.
+
+        timeData.delegate = self
         refreshCrews()
-        refreshTimes()
+        timeData.setTimeListener(forEventId: eventId, eventRef: eventRef)
     
     }
     
     func stopListening() { //function called to stop any listener before the crewData object goes out of scope
         if crewListener != nil {crewListener!.remove()}
-        if timeListener != nil {timeListener!.remove()}
-        
+        timeData.stopListening()
     }
     
-    //PV: a method for loading Crews and setting a listener for chages to the crews
+    //PV: a private method for loading Crews and setting a listener for chages to the crews - cannot be called outside the object as it sets the listener and multip[le listeners would be started if it were called more than once
     
-    func refreshCrews() {
+    private func refreshCrews() {
         crewListener = FirestoreDb.collection("Events").document(eventId).collection("Crews").order(by: "crewNumber").addSnapshotListener { snapshot, error in
 
             guard let snapshot = snapshot else {  //Optional assignment
@@ -78,37 +79,19 @@ class CrewData: NSObject {
             }
         }
     }
- 
-    //PV: a method for loading Times and setting a listener for changes to the times
-    // however this may not be needed as I could create a function that updates the crews and the crews listener would pick up the change in the start or end time which is really all we need
     
-    func refreshTimes() {
-        // now we have the crews we can get the times
+    // These are the protocols as a firebaseListenerDelegate
+    func willUpdateModel() {
+        //tell our own delegate that the model is about to update
         delegate?.willUpdateModel()
+    }
+ 
+    func didUpdateModel() { //called when the times model is updated as this is the delegate for managing reading times
         
-        timeListener = FirestoreDb.collection("Times").whereField("eventId", isEqualTo: eventId).order(by: "time").addSnapshotListener { snapshot, error in
-            self.delegate?.willUpdateModel() //tell the delegate that the model is about to be updated
-            var newItems: [RecordedTime] = []
-            guard let snapshot = snapshot else {  //Optional assignment
-                print("Error fetching Times: \(error!)")
-                return
-            }
-            snapshot.documentChanges.forEach { diff in
-                let timesnapshot = RecordedTime(fromServerRecordedTime: diff.document)
-                if (diff.type == .added) {
-                    newItems.append(timesnapshot)
-                    print("time added data: \(timesnapshot))")
-                }
-                if (diff.type == .modified) { // this happens when the time comes back from the server after being written to the cache - there is nothing to do here but would be a good place to update a recording status of the time
-                    print("time came back from the server: \(String(describing: timesnapshot))")
-                }
-                if (diff.type == .removed) { // this never happens
-                    print("time removed data diff: \(String(describing: timesnapshot))")
-                }
-            }
-            self.processTimes(newItems, crews: self.crews)
-            self.delegate?.didUpdateModel()
-        }
+        self.processTimes(timeData.newTimes, crews: self.crews)
+        delegate?.didUpdateModel() //tell our own delegate that the model updated
+
+        
     }
 
     func processTimes(_ times: [RecordedTime], crews: [Crew]) {
@@ -119,7 +102,6 @@ class CrewData: NSObject {
             
             for crew in crews where crew.crewNumber == time.crewNumber {
                 crew.processTime(time)
-                lastTimestamp = time.time
                 
             }
         }

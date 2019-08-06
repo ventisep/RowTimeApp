@@ -150,6 +150,15 @@ class EventTableViewController: UITableViewController, UpdateableFromFirestoreLi
         refreshMarker.endRefreshing()
 
     }
+    
+    override func didMove(toParent parent: UIViewController?) {
+        if !(parent?.isEqual(self.parent) ?? false) {
+            print("Parent view loaded")
+            eventData.stopListening()
+        }
+        
+        super.didMove(toParent: parent)
+    }
 
     @IBAction func logout(_ sender: Any) {
         let firebaseAuth = Auth.auth()

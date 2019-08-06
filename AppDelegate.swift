@@ -20,7 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         // configure the Firebase backend (uses the information in the GoogleService-Info.plist)
         FirebaseApp.configure()
-        let storage = Storage.storage()
         // enable local persistence for the firebase database
         Database.database().isPersistenceEnabled = true
         return true

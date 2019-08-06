@@ -22,8 +22,6 @@ class CrewTableViewController: UITableViewController, UISearchResultsUpdating, U
     let crewData = CrewData()
     var times: [RecordedTime]? = nil
     
-    //TODO: incorporate selected event into the CrewData class so that it is initialised with a selected event and when that is changed then the crews are refreshed.  this will make the model self contained rather than having the event and eventid sitting outside on its own. and should also take timeslist and incorporate these into the crewdata.
-    
     // MARK: Private Properties
     
     private var filteredCrews = [Crew]()
@@ -55,14 +53,17 @@ class CrewTableViewController: UITableViewController, UISearchResultsUpdating, U
         
         definesPresentationContext = true
 
-        crewData.setEventListener(newEventId: self.eventId, eventRef: self.eventRef!)
+        crewData.setCrewListener(forEventId: self.eventId, eventRef: self.eventRef!)
     }
 
     @IBAction func RefreshControl(_ sender: UIRefreshControl, forEvent event: UIEvent) {
         
         //refresh the crew data by using the crewData object and calling its refresh method
+        //this recalculates the calculated times only as the model is updated by the listener
         
-        UpdateFromModel()
+        tableView.reloadData()
+        refreshControl?.endRefreshing()
+
     }
     
     //MARK: - UISearchResultsUpdating protocol conformance
@@ -124,63 +125,13 @@ class CrewTableViewController: UITableViewController, UISearchResultsUpdating, U
         if filterOn {
             crew = filteredCrews[(indexPath as NSIndexPath).row]
         }
-        let timeFormat = DateFormatter()
-        timeFormat.dateFormat = "HH:mm:ss.S"
         
-        cell.crewName.text = crew.crewName
-        cell.crewOarImage.image = UIImage(named: crew.picFile!)
-        cell.crewCategory.text = crew.category
-        cell.crewNumber.text = String(crew.crewNumber)
-        if crew.startTimeLocal != nil {
-            cell.startTime.text = timeFormat.string(from: crew.startTimeLocal!)
-        } else {
-            cell.startTime.text = "No time"
-        }
-        if crew.endTimeLocal != nil {
-            cell.stopTime.text = timeFormat.string(from: crew.endTimeLocal!)
-        }else {
-            cell.stopTime.text = "No time"
-        }
-
-        cell.crewTime.text = crew.elapsedTime
+        cell.set(crew: crew)
+        
 
         return cell
     }
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 
     // MARK: - Navigation
     
@@ -238,12 +189,6 @@ class CrewTableViewController: UITableViewController, UISearchResultsUpdating, U
     
     // MARK: - update from model
     
-
-    
-    private func UpdateFromModel(){
-        //a method to update the data on the screen from the model crewdata model.
-        crewData.refreshTimes()
-    }
     
     @IBAction func Sort(_ sender: UIBarButtonItem) {
         // var menustyle = UIAlertActionStyle(rawValue: 1)

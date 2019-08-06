@@ -2,15 +2,12 @@
 //  EventData.swift
 //  RowTime
 //
-//  This object provides a list of events either from the call to the server or 
-//  from a previously saved list.  Note this also loads the data into the tableview object
-//  of the viewcontroller passed to the loadEvents method. 
+//  This object provides gets a the list of events and sets up a listener for changes to the Firestore database and chaches that hold the data.
 //
-//  TODO: Update to use CoreData instead of the UserData subsystem
+//  It uses the protocol and delegate design approcah to provide communication on update events to the delegate
 //
 //  Created by Paul Ventisei on 06/06/2016.
 //  Copyright © 2016 Paul Ventisei. All rights reserved.
-// - forcing a change
 
 import Foundation
 import Firebase
@@ -27,7 +24,12 @@ class EventData: NSObject {
     let FirestoreDb = Firestore.firestore();
     var delegate : UpdateableFromFirestoreListener? = nil
     private let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    private var eventListener: ListenerRegistration?
 
+    func stopListening() { //function called to stop any listener before the crewData object goes out of scope
+        if eventListener != nil {eventListener!.remove()}
+        
+    }
     func loadEvents() {
         //PV: a method for loading Events from FireStore for the Events Collection
         // add a listener to the firestore database
@@ -36,6 +38,7 @@ class EventData: NSObject {
             var newItems: [Event] = []
                 guard let snapshot = snapshot else {  //Optional assignment
                     print("Error fetching Events: \(error!)")
+                    self.delegate?.didUpdateModel()
                     return
                 }
                 for data in snapshot.documents {
