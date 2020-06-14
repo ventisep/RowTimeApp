@@ -11,6 +11,8 @@
 
 import Foundation
 import Firebase
+import Combine
+
 
 
 protocol UpdateableFromFirestoreListener {
@@ -18,9 +20,9 @@ protocol UpdateableFromFirestoreListener {
     func willUpdateModel()
 }
 
-class EventData: NSObject {
-    
-    var events = [Event]()
+class EventListener: NSObject, ObservableObject {
+    // This class will listen for changes to events when the 
+    @Published var events = [Event]()
     let FirestoreDb = Firestore.firestore();
     var delegate : UpdateableFromFirestoreListener? = nil
     private let appDelegate = UIApplication.shared.delegate as! AppDelegate

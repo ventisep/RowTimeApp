@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class EventViewController: UIViewController {
 
@@ -22,7 +23,9 @@ class EventViewController: UIViewController {
     var imagePicker: ImagePicker!
 
     @IBOutlet weak var saveButton: UIBarButtonItem!
-
+    
+    let user = Auth.auth().currentUser
+    let FirestoreDb = Firestore.firestore();
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +46,9 @@ class EventViewController: UIViewController {
             print("segue after pressing the save button")
             let eventImageFileName = "holdingtext.jpg"
             //need to create and upload file reference here
-            let event = Event(eventId: eventID.text!, eventDate: eventDate.description,eventName: eventName.text!, eventImage: eventImageFileName, eventDesc: eventDescription.text!)
+            let event = Event(eventId: eventID.text!, eventDate: eventDate.date.description, eventName: eventName.text!, eventImageName:
+                eventImageFileName, eventImage: eventImage, eventDesc: eventDescription.text!)
+            event?.writeToFirestore(eventId: eventID.text!, inDatabase: FirestoreDb)
         }
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.

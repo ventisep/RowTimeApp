@@ -21,7 +21,7 @@ struct CrewListView: View {
         NavigationView {
             List(crewdata.crewlist, id:\.self) { crew in
 
-                NavigationLink(destination: TestCrewView(crew: crew)){
+                NavigationLink(destination: CrewDetailView(crew: crew)){
                 crewCell(crew: crew, crewdata: self.crewdata)
                 }
             }.navigationBarTitle("Crew Times")

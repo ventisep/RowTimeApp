@@ -10,6 +10,7 @@ import Foundation
 import FirebaseStorage
 
 class Files {
+    // this class is used to save and retrieve files from FirebaseStorage which is needed to hold images and webPage references.  It creates a reference that can be used to save the items.  Note the names used for images and web references do need to be unique
     
     private static let storageRef = Storage.storage().reference()
     

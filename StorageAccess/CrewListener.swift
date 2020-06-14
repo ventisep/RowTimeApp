@@ -12,13 +12,14 @@ import Combine
 
 
 @available(iOS 13.0, *)
-class TestCrewListener: NSObject, ObservableObject, UpdateableFromFirestoreListener{
+class CrewListener: NSObject, ObservableObject, UpdateableFromFirestoreListener{
 
     let FirestoreDb = Firestore.firestore();
         
     @Published var crewlist: [Crew] = []
     
-    var timeData = TimeData()
+    var delegate: UpdateableFromFirestoreListener?
+    var timeData = RecordedTimeListener()
 
     private var eventId: String = ""
     private var eventRef: DocumentReference?

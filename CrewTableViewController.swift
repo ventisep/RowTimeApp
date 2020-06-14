@@ -20,7 +20,7 @@ class CrewTableViewController: UITableViewController, UISearchResultsUpdating, U
     var event: Event?  = nil
     var eventId: String = ""
     var eventRef: DocumentReference?
-    let crewData = CrewData()
+    let crewData = CrewListener()
     var times: [RecordedTime]? = nil
     
     // MARK: Private Properties
@@ -53,7 +53,7 @@ class CrewTableViewController: UITableViewController, UISearchResultsUpdating, U
         
         definesPresentationContext = true
 
-        crewData.setCrewListener(forEvent: self.event!)
+        crewData.setCrewListener(forEventId: self.eventId)
     }
 
     @IBAction func RefreshControl(_ sender: UIRefreshControl, forEvent event: UIEvent) {

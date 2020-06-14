@@ -10,7 +10,7 @@ import Foundation
 import Firebase
 
 
-class TimeData: NSObject {
+class RecordedTimeListener: NSObject {
     
     let FirestoreDb = Firestore.firestore();
     var times: [RecordedTime] = []

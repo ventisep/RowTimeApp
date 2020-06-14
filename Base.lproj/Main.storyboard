@@ -157,7 +157,7 @@
                         <attributedString key="attributedTitle">
                             <fragment content="Getting Crews">
                                 <attributes>
-                                    <font key="NSFont" metaFont="message" size="11"/>
+                                    <font key="NSFont" metaFont="label" size="11"/>
                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                 </attributes>
                             </fragment>
@@ -424,7 +424,7 @@
                         <attributedString key="attributedTitle">
                             <fragment content="Getting Events">
                                 <attributes>
-                                    <font key="NSFont" metaFont="message" size="11"/>
+                                    <font key="NSFont" metaFont="label" size="11"/>
                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                 </attributes>
                             </fragment>
@@ -572,82 +572,6 @@
                 <exit id="XFf-9l-Q4E" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="-2015" y="254"/>
-        </scene>
-        <!--Start View Controller-->
-        <scene sceneID="FYs-j6-LQT">
-            <objects>
-                <viewController id="fv1-EP-w95" customClass="StartViewController" customModule="RowTime" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Z0N-Px-jYY"/>
-                        <viewControllerLayoutGuide type="bottom" id="900-sS-Fpv"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="TtM-0Z-PA7">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MacchuPiccu1" highlighted="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jmy-69-0hv">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                            </imageView>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="#Enter Event Code" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="QeH-0x-opS" userLabel="eventCode">
-                                <rect key="frame" x="82" y="571" width="211" height="36"/>
-                                <color key="backgroundColor" red="1" green="0.91453017400000003" blue="0.87194776169999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
-                                <accessibility key="accessibilityConfiguration" hint="Please enter the code for the Event you want to watch/control" label="Event Code">
-                                    <accessibilityTraits key="traits" none="YES"/>
-                                    <bool key="isElement" value="YES"/>
-                                </accessibility>
-                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="go" enablesReturnKeyAutomatically="YES"/>
-                                <connections>
-                                    <action selector="eventEntered:" destination="fv1-EP-w95" eventType="editingDidEndOnExit" id="ZSx-uF-M4t"/>
-                                </connections>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fot-gW-TIR">
-                                <rect key="frame" x="297" y="700" width="70" height="70"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="70" id="M1z-F6-9FA"/>
-                                    <constraint firstAttribute="width" constant="70" id="zkD-xM-LN6"/>
-                                </constraints>
-                                <state key="normal" image="icons8-admin_settings_male">
-                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <segue destination="Ocf-vq-k0c" kind="showDetail" identifier="toLogin" id="9Qd-E5-RjK"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="this is a test label with errors in it" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DEh-eY-m5V">
-                                <rect key="frame" x="82" y="623" width="211" height="40.666666666666629"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.91055041550000004" green="0.71017098430000003" blue="0.68232983349999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <color key="highlightedColor" cocoaTouchSystemColor="darkTextColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" red="0.91055041551589966" green="0.71017098426818848" blue="0.68232983350753784" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                        <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="QeH-0x-opS" secondAttribute="trailing" constant="66" id="3Z8-jF-Rlz"/>
-                            <constraint firstItem="900-sS-Fpv" firstAttribute="top" secondItem="QeH-0x-opS" secondAttribute="bottom" constant="171" id="CKD-9l-90z"/>
-                            <constraint firstItem="DEh-eY-m5V" firstAttribute="leading" secondItem="QeH-0x-opS" secondAttribute="leading" id="GLm-9G-pKY"/>
-                            <constraint firstItem="Fot-gW-TIR" firstAttribute="trailing" secondItem="TtM-0Z-PA7" secondAttribute="trailingMargin" constant="8" id="UmI-97-E35"/>
-                            <constraint firstItem="jmy-69-0hv" firstAttribute="top" secondItem="TtM-0Z-PA7" secondAttribute="top" id="WCa-wa-ZSP"/>
-                            <constraint firstItem="DEh-eY-m5V" firstAttribute="top" secondItem="QeH-0x-opS" secondAttribute="bottom" constant="16" id="bA4-mM-peI"/>
-                            <constraint firstItem="QeH-0x-opS" firstAttribute="centerX" secondItem="TtM-0Z-PA7" secondAttribute="centerX" id="bbg-Os-pa3"/>
-                            <constraint firstAttribute="trailing" secondItem="jmy-69-0hv" secondAttribute="trailing" id="i7f-oy-g0J"/>
-                            <constraint firstItem="QeH-0x-opS" firstAttribute="leading" secondItem="TtM-0Z-PA7" secondAttribute="leadingMargin" constant="66" id="lnA-6T-mZO"/>
-                            <constraint firstAttribute="bottom" secondItem="jmy-69-0hv" secondAttribute="bottom" id="n6v-YT-XTd"/>
-                            <constraint firstItem="DEh-eY-m5V" firstAttribute="trailing" secondItem="QeH-0x-opS" secondAttribute="trailing" id="s2H-gw-ulI"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="Fot-gW-TIR" secondAttribute="bottom" constant="8" id="vOs-Zp-zjY"/>
-                            <constraint firstItem="jmy-69-0hv" firstAttribute="leading" secondItem="TtM-0Z-PA7" secondAttribute="leading" id="yPb-sw-uTB"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="eventCode" destination="QeH-0x-opS" id="x8l-dx-9l5"/>
-                        <outlet property="searchResults" destination="DEh-eY-m5V" id="6cl-Aq-i5b"/>
-                        <segue destination="bI9-k9-Er2" kind="presentation" identifier="noLoginToNavigation" modalPresentationStyle="fullScreen" id="wDi-D0-RtB"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dcV-Yq-LFG" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-2802.4000000000001" y="954.87256371814101"/>
         </scene>
         <!--Record a Time-->
         <scene sceneID="0FK-Vk-2z0">
@@ -964,13 +888,11 @@
         <segue reference="nWV-fz-ztr"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="MacchuPiccu1" width="768" height="1024"/>
         <image name="Rectangle 1" width="165" height="40"/>
         <image name="Rectangle 2" width="165" height="40"/>
         <image name="Star Empty" width="23.333333969116211" height="21"/>
         <image name="Star Half Full" width="22" height="21"/>
         <image name="defaultPhoto" width="1024" height="768"/>
-        <image name="icons8-admin_settings_male" width="120" height="120"/>
         <image name="icons8-left_filled" width="100" height="100"/>
         <image name="simple row boat" width="92.333335876464844" height="42.666667938232422"/>
     </resources>

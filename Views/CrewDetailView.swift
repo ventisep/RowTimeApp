@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct TestCrewView: View {
+struct CrewDetailView: View {
     var crew: Crew?
     
     var body: some View {
@@ -18,6 +18,6 @@ struct TestCrewView: View {
 
 struct SwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
-        TestCrewView(crew: nil)
+        CrewDetailView(crew: nil)
     }
 }

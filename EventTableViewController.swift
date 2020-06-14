@@ -14,7 +14,7 @@ class EventTableViewController: UITableViewController, UpdateableFromFirestoreLi
 
     // MARK: Properties
     
-    let eventData = EventData()
+    let eventData = EventListener()
     
     //MARK: Initialisation
     

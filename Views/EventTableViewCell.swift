@@ -27,11 +27,10 @@ class EventTableViewCell: UITableViewCell {
     func set(event: Event) {
         event_id = event.eventId
         eventName.text = event.eventName
-        eventImage.image = nil
         eventDate.text = String(event.eventDate)
         eventShortDescription.text = event.eventDesc
-        let ref = Files.imageReference(imageName: event.eventImage)
-        eventImage.setImage(storageReference: ref)
+        let ref = Files.imageReference(imageName: event.eventImageName)
+        eventImage.setImage(storageReference: ref) //This pulls the image from the storageReference in FirebaseStorage
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
