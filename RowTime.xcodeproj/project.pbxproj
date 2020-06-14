@@ -359,7 +359,6 @@
 				DA17C99B1D06148000C79F07 /* EventListener.swift */,
 				06B71275248FBA6300EA41B8 /* CrewListener.swift */,
 				0691ADCC22B63A8D000D964D /* RecordedTimeListener.swift */,
-				0691ADCF22F2E190000D964D /* Files.swift */,
 			);
 			path = StorageAccess;
 			sourceTree = "<group>";
@@ -379,6 +378,7 @@
 			isa = PBXGroup;
 			children = (
 				06BAC664246866AC00290E94 /* imagePicker.swift */,
+				0691ADCF22F2E190000D964D /* Files.swift */,
 			);
 			path = "Helper Classes";
 			sourceTree = "<group>";

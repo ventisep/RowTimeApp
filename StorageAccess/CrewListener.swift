@@ -38,15 +38,16 @@ class CrewListener: NSObject, ObservableObject, UpdateableFromFirestoreListener{
     func setCrewListener(forEventId: String) {
         
         //set the eventId to the newEventId and then process an update of the model
-        
-        eventId = forEventId
+        if crewListener == nil {
+            eventId = forEventId
 
-        // 1. read all the crews for the selected event from Firebase and set a listener.
-        // 2. set this object as the delegate for TimeData service which will be called when the crews have been recieved.
+            // 1. read all the crews for the selected event from Firebase and set a listener.
+            // 2. set this object as the delegate for TimeData service which will be called when the crews have been recieved.
 
-        timeData.delegate = self
-        refreshCrews()
-        timeData.setTimeListener(forEventId: eventId)
+            timeData.delegate = self
+            refreshCrews()
+            timeData.setTimeListener(forEventId: eventId)
+        }
     
     }
     

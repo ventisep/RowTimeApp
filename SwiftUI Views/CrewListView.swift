@@ -10,21 +10,31 @@ import SwiftUI
 
 @available(iOS 13.0.0, *)
 struct CrewListView: View {
-    @ObservedObject var crewdata: CrewListener
+    @ObservedObject var crewListener: CrewListener
+    var eventId: String = "2lryLSYS9KPf6D123VUo"
     @State private var time: String = "time"
     @State private var startTime: String = ""
+    @State var selectedTab: Int = 1
     let timeFormat = DateFormatter()
 
         
     var body: some View {
-        TabView(selection: /*@START_MENU_TOKEN@*/ /*@PLACEHOLDER=Selection@*/.constant(1)/*@END_MENU_TOKEN@*/) {
+        TabView(selection: $selectedTab) {
         NavigationView {
-            List(crewdata.crewlist, id:\.self) { crew in
-
+            List(crewListener.crewlist, id:\.self) { crew in
                 NavigationLink(destination: CrewDetailView(crew: crew)){
-                crewCell(crew: crew, crewdata: self.crewdata)
+                crewCell(crew: crew, crewListener: self.crewListener)
                 }
-            }.navigationBarTitle("Crew Times")
+            }.navigationBarTitle("Crew Times", displayMode: .inline)
+             .navigationBarItems(
+                leading:
+                    Button("refresh") {
+                        self.crewListener.setCrewListener(forEventId: self.eventId)
+                    },
+                trailing:
+                    Button("Add Crew") {
+                        print("add Crew")
+                    })
         }.tabItem { Text("In Progress") }.tag(1)
         /*@START_MENU_TOKEN@*/Text("Tab Content 2").tabItem { Text("Tab Label 2") }.tag(2)/*@END_MENU_TOKEN@*/
         }
@@ -34,7 +44,7 @@ struct CrewListView: View {
 
 struct crewCell: View {
     var crew: Crew
-    @ObservedObject var crewdata: CrewListener
+    @ObservedObject var crewListener: CrewListener
     
     var body: some View {
         VStack (alignment: .leading){
@@ -47,7 +57,7 @@ struct crewCell: View {
             }
             HStack(alignment: .lastTextBaseline) {
                 Text("Start: \(crew.startTimeLocal?.description ?? " ") ").onTapGesture {
-                    self.crew.addTime(FirestoreDb: self.crewdata.FirestoreDb, time: Date(), stage: 0)
+                    self.crew.addTime(FirestoreDb: self.crewListener.FirestoreDb, time: Date(), stage: 0)
                 }
                 Spacer()
                 Text("Finished: ")
@@ -63,6 +73,6 @@ struct crewCell: View {
 @available(iOS 13.0.0, *)
 struct TestSwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
-        CrewListView(crewdata: CrewListener())
+        CrewListView(crewListener: CrewListener())
     }
 }
