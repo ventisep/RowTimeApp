@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import Firebase
 
-class EventTableViewController: UITableViewController, UpdateableFromModel {
+class EventTableViewController: UITableViewController, UpdateableFromFirestoreListener {
 
     // MARK: Properties
     
@@ -57,11 +58,7 @@ class EventTableViewController: UITableViewController, UpdateableFromModel {
         // Fetches the appropriate crew for the data source layout.
         let event = eventData.events[(indexPath as NSIndexPath).row]
         
-        cell.event_id = event.eventId
-        cell.eventName.text = event.eventName
-        cell.eventImage.image = nil
-        cell.eventDate.text = String(event.eventDate)
-        cell.eventShortDescription.text = event.eventDesc
+        cell.set(event: event)
 
         return cell
     }
@@ -120,8 +117,10 @@ class EventTableViewController: UITableViewController, UpdateableFromModel {
                 
                 let indexPath = tableView.indexPath(for: selectedEventCell)!
                 let selectedEvent = eventData.events[(indexPath as NSIndexPath).row].eventId
+                let selectedEventRef = eventData.events[(indexPath as NSIndexPath).row].eventRef
             
             crewTableViewController.eventId = selectedEvent
+            crewTableViewController.eventRef = selectedEventRef
             crewTableViewController.event = eventData.events[(indexPath as NSIndexPath).row]
 
             }
@@ -141,7 +140,6 @@ class EventTableViewController: UITableViewController, UpdateableFromModel {
     
     func willUpdateModel(){
         //called by EventData when it is abbout to update the list of events
-        print("got to willupdatemodel")
         refreshMarker.beginRefreshing()
 
     }
@@ -151,6 +149,30 @@ class EventTableViewController: UITableViewController, UpdateableFromModel {
         self.tableView.reloadData()
         refreshMarker.endRefreshing()
 
+    }
+    
+    override func didMove(toParent parent: UIViewController?) {
+        if !(parent?.isEqual(self.parent) ?? false) {
+            print("Parent view loaded")
+            eventData.stopListening()
+        }
+        
+        super.didMove(toParent: parent)
+    }
+
+    @IBAction func logout(_ sender: Any) {
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+            self.performSegue(withIdentifier: "unwindToLogin", sender: self)
+        } catch let signOutError as NSError {
+            print ("Error signing out: %@", signOutError)
+        }
+    }
+    
+    @IBAction func unwindToEventList(_ unwindSegue: UIStoryboardSegue) {
+        let sourceViewController = unwindSegue.source
+        // Use data from the view controller which initiated the unwind segue
     }
 
 }

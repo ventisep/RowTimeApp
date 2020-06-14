@@ -28,8 +28,11 @@ class CrewViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     @IBOutlet var crewCategoryCollection: [UIPickerView]!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
+    var event: Event?
     var crew: Crew?
-    var pickerCategoryData: [[String]]?
+    var pickerCategoryData: [[String]] = [["","W"],["NOV","IM1","IM2","IM3","J14","J15","J16","J18","CH","ELI"],
+        ["1","2","4","8"],
+        ["X+","X-","+","-"]]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,10 +43,7 @@ class CrewViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 
         crewCategoryPicker?.delegate = self
         crewCategoryPicker?.dataSource = self
-        
-        pickerCategoryData = [[" ","W"],["NOV","IM1","IM2","IM3","J14","J15","J16","J18","ELI"],["1","2","3","4","8"],["X+","X-","+","-"]]
-        
-        
+
     }
   
     // MARK: UITextFieldDelegate
@@ -72,8 +72,8 @@ class CrewViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-// Local variable inserted by Swift 4.2 migrator.
-let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+        // Local variable inserted by Swift 4.2 migrator.
+        let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
 
         // The info dictionary contains multiple representations of the image and this uses the original.
         let selectedImage = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as! UIImage
@@ -94,13 +94,13 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
     
     // The number of rows of data
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return pickerCategoryData![component].count
+        return pickerCategoryData[component].count
     }
     
     // The data to return for the row and component (column) that's being passed in
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
 
-        return pickerCategoryData![component][row]
+        return pickerCategoryData[component][row]
     }
     
     // MARK: Navigation
@@ -113,23 +113,42 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
     
     // This method lets you configure a view controller before it's presented.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
         
-    /* this section stopped working after upgrade and migration to swift 3 - need to fix PV
-        
-        if saveButton === sender {
+        if saveButton == sender as? UIBarButtonItem {
 
             let crewName = crewNameTextField.text
-            let picFile = "bms.gif"
+            let picFile: String? = "bms.gif"
             let crewNumber = Int(crewNumberTextField.text!)
-            let category = crewCategoryTextField.text
+            let category = pickerCategoryData[0][ crewCategoryPicker.selectedRow(inComponent: 0)] +
+            pickerCategoryData[1][ crewCategoryPicker.selectedRow(inComponent: 1)] +
+            pickerCategoryData[2][ crewCategoryPicker.selectedRow(inComponent: 2)] +
+            pickerCategoryData[3][ crewCategoryPicker.selectedRow(inComponent: 3)]
+            
             let crewScheduledTime = crewScheduledTimeTextField.text
  
             //prepare the crew details to be passed to the CrewTableViewController after the unwind seque TODO: because these are not validated then the programme can crash here
-         /*
-            crew = Crew(eventId: "event", crewNumber: crewNumber!, division: 1, crewScheduledTime: crewScheduledTime!, crewName: crewName!, picFile: picFile, category: category!, rowerCount: 4, cox: false, rowerIds: ["Crew 104 rower 1", "Crew 104 rower 2", "Crew 104 rower 3", "Crew 104 rower 4"])
-        */
+            
+            crew = Crew(eventRef: event?.eventRef,
+                        eventId: (event?.eventId)!,
+                        crewId: nil,
+                         crewNumber: crewNumber!,
+                         division: nil,
+                         crewScheduledTime: nil,
+                         crewName: crewName!,
+                         picFile: picFile,
+                         category: category,
+                         rowerCount: 4,
+                        cox: nil,
+                        rowers: nil,
+                        endTimeLocal: nil,
+                        startTimeLocal: nil,
+                        stageTimes: nil,
+                        inProgress: nil,
+                        recordedTimes: nil)
+        
         }
-    */
+    
     }
     
     // MARK: Actions
