@@ -11,7 +11,7 @@ import Firebase
 
 class RecordedTime: NSObject  {
     
-    var crewId: DocumentReference?
+    var crewRef: DocumentReference?
     var crewNumber: Int? = 0
     var eventId: String = ""
     var obsType: Int = 0
@@ -32,18 +32,18 @@ class RecordedTime: NSObject  {
         // Conversion from string based dictionary follows pattern:
         // for optional values: self.testA = dictionary["testA"] as? String
         // for required values set a default: self.testC = dictionary["testC"] as? String ?? "default"
-        self.crewId = value["crewId"] as? DocumentReference
+        self.crewRef = value["crewRef"] as? DocumentReference
         self.crewNumber=value["crewNumber"] as? Int ?? 0
         self.eventId=(value["eventId"] as? String)!
-        self.obsType=value["obsType"] as? Int ?? 0
+        self.obsType = value["obsType"] as? Int ?? 0
         self.stage=value["stage"] as? Int ?? 0
         self.time=(value["time"] as? Date)!
         self.timestamp=value["timestamp"] as? String
     }
     
-    func addTime(toCrew: Crew, inDatabase: Firestore) {
+    func writeToFirestore(toCrew: Crew, inDatabase: Firestore) {
         // Add a new document in collection "Times"
-        inDatabase.collection("Events").document(toCrew.eventId).collection("Times").addDocument(data: ["crewId":toCrew.crewId as Any,
+        inDatabase.collection("Events").document(toCrew.eventId).collection("Times").addDocument(data: ["crewRef":toCrew.crewRef as Any,
                                                           "crewNumber":self.crewNumber as Any,
                                                           "eventId":self.eventId,
                                                           "obsType":self.obsType,

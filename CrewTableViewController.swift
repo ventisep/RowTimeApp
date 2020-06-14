@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 import Firebase
 
+@available(iOS 13.0, *)
 class CrewTableViewController: UITableViewController, UISearchResultsUpdating, UpdateableFromFirestoreListener{
 
     
@@ -41,7 +42,6 @@ class CrewTableViewController: UITableViewController, UISearchResultsUpdating, U
         
         // Set up the search controller
 
-        searchController.dimsBackgroundDuringPresentation = false
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchResultsUpdater = self
         searchController.hidesNavigationBarDuringPresentation = false;
@@ -53,7 +53,7 @@ class CrewTableViewController: UITableViewController, UISearchResultsUpdating, U
         
         definesPresentationContext = true
 
-        crewData.setCrewListener(forEventId: self.eventId, eventRef: self.eventRef!)
+        crewData.setCrewListener(forEvent: self.event!)
     }
 
     @IBAction func RefreshControl(_ sender: UIRefreshControl, forEvent event: UIEvent) {
@@ -85,7 +85,7 @@ class CrewTableViewController: UITableViewController, UISearchResultsUpdating, U
                 }
             }
             
-            filteredCrews = crewData.crews.filter(searchFilter)
+            filteredCrews = crewData.crewlist.filter(searchFilter)
             
         } else {
             filterOn = false
@@ -106,11 +106,11 @@ class CrewTableViewController: UITableViewController, UISearchResultsUpdating, U
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // PV: updated to count of rows in the crews array
+        // PV: updated to count of rows in the crewlist array
         if filterOn{
             return filteredCrews.count
         } else {
-            return crewData.crews.count
+            return crewData.crewlist.count
         }
     }
 
@@ -121,7 +121,7 @@ class CrewTableViewController: UITableViewController, UISearchResultsUpdating, U
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! CrewTableViewCell
         
         // Fetches the appropriate crew for the data source layout.
-        var crew = crewData.crews[(indexPath as NSIndexPath).row]
+        var crew = crewData.crewlist[(indexPath as NSIndexPath).row]
         if filterOn {
             crew = filteredCrews[(indexPath as NSIndexPath).row]
         }
@@ -151,11 +151,12 @@ class CrewTableViewController: UITableViewController, UISearchResultsUpdating, U
                 if filterOn {
                     timerViewController.crew = filteredCrews[(indexPath as NSIndexPath).row]
                 } else {
-                    timerViewController.crew = crewData.crews[(indexPath as NSIndexPath).row]
+                    timerViewController.crew = crewData.crewlist[(indexPath as NSIndexPath).row]
                 }
 
                 timerViewController.event = event
                 timerViewController.eventId = eventId
+                timerViewController.recordMode = true
             }
         }
         if segue.identifier == "addCrew" {
@@ -166,13 +167,16 @@ class CrewTableViewController: UITableViewController, UISearchResultsUpdating, U
     
     @IBAction func unwindToCrewList(_ sender: UIStoryboardSegue){
         if sender.identifier == "unwindAddCrew" {
+            print("unwinding adding a crew")
             if let sourceViewController = sender.source as? CrewViewController, let crew = sourceViewController.crew {
                 
-                // Add a new crew.
-                let newIndexPath = IndexPath(row: crewData.crews.count, section: 0)
-                crewData.crews.append(crew)
-                tableView.insertRows(at: [newIndexPath], with: .bottom)
+            // Add a new crew. not needed becasue listener picks it up
+            //    let newIndexPath = IndexPath(row: crewData.crewlist.count, section: 0)
+            //    crewData.crewlist.append(crew)
+            //    tableView.insertRows(at: [newIndexPath], with: .bottom)
             }
+        } else if sender.identifier == "unwindCancelCrew" {
+            print("Unwinding Cancel of Adding a Crew")
         }
         self.tableView.reloadData()
 

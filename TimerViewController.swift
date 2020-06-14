@@ -38,6 +38,9 @@ class TimerViewController: UIViewController, UITextFieldDelegate, UITableViewDat
     
     var displayTime: String = "00:00:00.00" //String for the DigitalReadout
     var times = [RecordedTime]() //data for the TimeTableView
+    weak var timer: Timer?
+    let timerInterval1 = 0.05  //time interval between updating the display
+    let timerInterval2 = 3.0  // time to stop updates when button pressed
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,12 +48,13 @@ class TimerViewController: UIViewController, UITextFieldDelegate, UITableViewDat
         //handle the text fields through delegates
         CrewNumber.text = String(crew!.crewNumber)
         CrewNumber.delegate = self
-        if recordMode {
+        DigitalReadout.text = " "
+
+        if recordMode == true {
             //the user is recording times
             //set the readout to the current time
             //set interval to keep Digital Readout up to date with current time
-            updateDisplayTime()
-            Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateDisplayTime), userInfo: nil, repeats: true)
+            timer=Timer.scheduledTimer(timeInterval: timerInterval1, target: self, selector: #selector(updateDisplayTime), userInfo: nil, repeats: false)
             if crew?.recordedTimes != nil {
                 times = (crew?.recordedTimes)!
             }
@@ -72,6 +76,7 @@ class TimerViewController: UIViewController, UITextFieldDelegate, UITableViewDat
         timeFormatForReadout.dateFormat = "HH:mm:ss"
         displayTime = timeFormatForReadout.string(from: Date())
         DigitalReadout.text = displayTime
+        timer=Timer.scheduledTimer(timeInterval: timerInterval1, target: self, selector: #selector(updateDisplayTime), userInfo: nil, repeats: false)
         
     }
     
@@ -226,9 +231,11 @@ class TimerViewController: UIViewController, UITextFieldDelegate, UITableViewDat
         displayTime = timeFormatForReadout.string(from: timeButtonPressed)
         
         //Stop the clock counting and show the time just recorded, restart the Clock in 3 seconds after the freezing of it
-        //MARK:  TODO put in the stop of the clock and set interval to restart it
+
         
         DigitalReadout.text = displayTime
+        timer?.invalidate()
+        timer=Timer.scheduledTimer(timeInterval: timerInterval2, target: self, selector: #selector(updateDisplayTime), userInfo: nil, repeats: false)
 
     
         //Add a time to the times array and refresh the timeTableView
@@ -245,7 +252,7 @@ class TimerViewController: UIViewController, UITextFieldDelegate, UITableViewDat
         
         let recordedTime1 = RecordedTime(crewNumber: Int(CrewNumber.text!), eventId: eventId,  obsType: 0, stage: stage, time: time, timeId: "RC1")
         
-        recordedTime1!.addTime(toCrew: crew!, inDatabase: FirestoreDb)
+        recordedTime1!.writeToFirestore(toCrew: crew!, inDatabase: FirestoreDb)
         times.insert(recordedTime1!, at: 0)
         
         let newIndexPath = IndexPath(row: 0, section: 0)
@@ -254,7 +261,12 @@ class TimerViewController: UIViewController, UITextFieldDelegate, UITableViewDat
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidLoad()
+        timer?.invalidate()
     }
 
 

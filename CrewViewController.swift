@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+
 
 class CrewViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
@@ -23,10 +25,12 @@ class CrewViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     @IBOutlet weak var crewNumberTextField: UITextField!
     @IBOutlet weak var crewScheduledTimeTextField: UITextField!
  
-
-    @IBOutlet weak var crewCategoryPicker: UIPickerView!
-    @IBOutlet var crewCategoryCollection: [UIPickerView]!
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
     @IBOutlet weak var saveButton: UIBarButtonItem!
+    @IBOutlet weak var crewCategoryPicker: UIPickerView!
+    
+    let user = Auth.auth().currentUser
+    let FirestoreDb = Firestore.firestore();
     
     var event: Event?
     var crew: Crew?
@@ -56,11 +60,11 @@ class CrewViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if textField === crewNameTextField {
+       /* if textField === crewNameTextField {
         crewNameTextField.text = "hello, it worked"
         } else if textField === crewNumberTextField {
             crewNumberTextField.text! = "105"
-        }
+        } TODO here we can do some validation */
     }
     
     // MARK: UIImagePickerControllerDelegate
@@ -119,7 +123,7 @@ class CrewViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 
             let crewName = crewNameTextField.text
             let picFile: String? = "bms.gif"
-            let crewNumber = Int(crewNumberTextField.text!)
+            let crewNumber = Int(crewNumberTextField.text!) ?? 0
             let category = pickerCategoryData[0][ crewCategoryPicker.selectedRow(inComponent: 0)] +
             pickerCategoryData[1][ crewCategoryPicker.selectedRow(inComponent: 1)] +
             pickerCategoryData[2][ crewCategoryPicker.selectedRow(inComponent: 2)] +
@@ -132,13 +136,13 @@ class CrewViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
             crew = Crew(eventRef: event?.eventRef,
                         eventId: (event?.eventId)!,
                         crewId: nil,
-                         crewNumber: crewNumber!,
-                         division: nil,
-                         crewScheduledTime: nil,
-                         crewName: crewName!,
-                         picFile: picFile,
-                         category: category,
-                         rowerCount: 4,
+                        crewNumber: crewNumber,
+                        division: nil,
+                        crewScheduledTime: nil,
+                        crewName: crewName!,
+                        picFile: picFile,
+                        category: category,
+                        rowerCount: 4,
                         cox: nil,
                         rowers: nil,
                         endTimeLocal: nil,
@@ -146,7 +150,11 @@ class CrewViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
                         stageTimes: nil,
                         inProgress: nil,
                         recordedTimes: nil)
+            
+            crew?.writeToFirestore(inDatabase: FirestoreDb)
         
+        } else if cancelButton == sender as? UIBarButtonItem {
+            print("cancel button pressed")
         }
     
     }

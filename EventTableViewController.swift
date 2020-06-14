@@ -9,11 +9,14 @@
 import UIKit
 import Firebase
 
+@available(iOS 13.0, *)
 class EventTableViewController: UITableViewController, UpdateableFromFirestoreListener {
 
     // MARK: Properties
     
     let eventData = EventData()
+    
+    //MARK: Initialisation
     
     override func viewDidLoad() {
         
@@ -103,36 +106,7 @@ class EventTableViewController: UITableViewController, UpdateableFromFirestoreLi
     }
     */
     
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == "ShowCrews" {
-            
-            let crewTableViewController = segue.destination as! CrewTableViewController
-            
-            // Get the cell that generated this segue.
-            if let selectedEventCell = sender as? EventTableViewCell {
-                
-                let indexPath = tableView.indexPath(for: selectedEventCell)!
-                let selectedEvent = eventData.events[(indexPath as NSIndexPath).row].eventId
-                let selectedEventRef = eventData.events[(indexPath as NSIndexPath).row].eventRef
-            
-            crewTableViewController.eventId = selectedEvent
-            crewTableViewController.eventRef = selectedEventRef
-            crewTableViewController.event = eventData.events[(indexPath as NSIndexPath).row]
-
-            }
-        }
-        else if segue.identifier == "AddItem" {
-            
-            print("Adding new event.")
-        }
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    
+ //MARK: Data refreshing
     @IBOutlet weak var refreshMarker: UIRefreshControl!
     @IBAction func refreshController(_ sender: Any) {
         eventData.loadEvents()
@@ -151,6 +125,8 @@ class EventTableViewController: UITableViewController, UpdateableFromFirestoreLi
 
     }
     
+    //MARK: De-initialise
+    
     override func didMove(toParent parent: UIViewController?) {
         if !(parent?.isEqual(self.parent) ?? false) {
             print("Parent view loaded")
@@ -159,6 +135,40 @@ class EventTableViewController: UITableViewController, UpdateableFromFirestoreLi
         
         super.didMove(toParent: parent)
     }
+    
+    //MARK: Navigation
+
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+         
+         switch segue.identifier {
+             case "ShowCrews":
+                 do {
+                     
+                     let crewTableViewController = segue.destination as! CrewTableViewController
+                     
+                     // Get the cell that generated this segue.
+                     if let selectedEventCell = sender as? EventTableViewCell {
+                         
+                         let indexPath = tableView.indexPath(for: selectedEventCell)!
+                         
+                         crewTableViewController.event = eventData.events[(indexPath as NSIndexPath).row]
+                         
+                     }
+                 }
+             case "AddEvent":do {
+                 
+                 print("Adding new event.")
+                 }
+             default: do {
+                 print("default")
+             }
+         }
+
+         // Get the new view controller using segue.destinationViewController.
+         // Pass the selected object to the new view controller.
+     }
+     
 
     @IBAction func logout(_ sender: Any) {
         let firebaseAuth = Auth.auth()

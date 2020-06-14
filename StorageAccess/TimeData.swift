@@ -18,7 +18,6 @@ class TimeData: NSObject {
     var delegate: UpdateableFromFirestoreListener? = nil
 
     private var eventId: String = ""
-    private var eventRef: DocumentReference?
     private var lastTimestamp: Date = Date(timeIntervalSince1970: 0)//first time set to old date to get everything
 
     private let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -26,12 +25,11 @@ class TimeData: NSObject {
 
     
     
-    func setTimeListener(forEventId: String, eventRef: DocumentReference) {
+    func setTimeListener(forEventId: String) {
         
         //set the eventId to the newEventId and then process an update of the model
         
         eventId = forEventId
-        self.eventRef = eventRef
 
         // read all the times for the selected event from Firebase and set a listener
         newTimes = [] // clear down the new times
@@ -47,13 +45,13 @@ class TimeData: NSObject {
 
      //PV: a method for loading Times and setting a listener for changes to the times
     
-    func refreshTimes() {
+    private func refreshTimes() {
         // now we have the crews we can get the times
         delegate?.willUpdateModel()
         timeListener = FirestoreDb.collection("Events").document(eventId).collection("Times").order(by: "time").addSnapshotListener { snapshot, error in
 
             self.delegate?.willUpdateModel() //tell the delegate that the model is about to be updated
-            self.newTimes = []
+            self.newTimes = [] //clear old times
             guard let snapshot = snapshot else {  //Optional assignment
                 print("Error fetching Times: \(error!)")
                 return
@@ -68,7 +66,9 @@ class TimeData: NSObject {
                 if (diff.type == .modified) { // this happens when the time comes back from the server after being written to the cache - there is nothing to do here but would be a good place to update a recording status of the time
                     print("time came back from the server: \(String(describing: timesnapshot))")
                 }
-                if (diff.type == .removed) { // this never happens
+                if (diff.type == .removed) { // this happens when there is an error writing the time to the database. set the ObsType to 1
+                    timesnapshot.obsType = 1
+                    self.newTimes.append(timesnapshot)
                     print("time removed data diff: \(String(describing: timesnapshot))")
                 }
             }

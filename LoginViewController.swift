@@ -69,15 +69,27 @@ class LoginViewController: UIViewController {
             //either password or username were not set so return without doing anything
             print("either password or username was not set")
         }else {
-            Auth.auth().createUser(withEmail: userName.text!, password: password.text!) { authResult, error in
-            // action to be done as well as registering the user
-        }
+            Auth.auth().createUser(withEmail: userName.text!, password: password.text!) { [weak self] authResult, error in
+                // action to be done as well as registering the user
+                guard let strongSelf = self else { return }
+                print("login attempt \(String(describing: authResult)) \(String(describing: error))")
+                //error handling
+                if let error = error, authResult == nil {
+                    let alert = UIAlertController(title: "Register Failed",
+                                                  message: error.localizedDescription,
+                                                  preferredStyle: .alert)
+                    
+                    alert.addAction(UIAlertAction(title: "OK", style: .default))
+                    
+                    strongSelf.present(alert, animated: true, completion: nil)
+                }
         
-      }
+            }
+        }
     }
     
     @IBAction func unwindToLogin(segue: UIStoryboardSegue) {
-        
+        print ("hello at login")
     }
     
     

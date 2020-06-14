@@ -20,14 +20,29 @@ class CrewTableViewCell: UITableViewCell {
     @IBOutlet weak var stopTime: UILabel!
     @IBOutlet weak var crewTime: UILabel!
     @IBOutlet weak var crewNumber: UILabel!
-    
+    @IBOutlet weak var CrewCellView: UIView!
+    var crewSave: Crew?
+    var timer: Timer?
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        
         // Initialization code
-    }
 
+    }
+    
+    func runTimer() {
+        timer = Timer.scheduledTimer(timeInterval: 0.5, target: self,   selector: (#selector(CrewTableViewCell.updateTimer)), userInfo: nil, repeats: true)
+    }
+    
+    @objc func updateTimer (){
+        crewTime.text = crewSave!.elapsedTime
+        if !((crewSave?.inProgress!)!) {
+            timer?.invalidate()
+        }
+    }
     func set(crew: Crew) {
+        crewSave = crew
         let timeFormat = DateFormatter()
         timeFormat.dateFormat = "HH:mm:ss.S"
         
@@ -47,6 +62,7 @@ class CrewTableViewCell: UITableViewCell {
         }
         
         crewTime.text = crew.elapsedTime
+        runTimer()
     }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

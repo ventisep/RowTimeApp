@@ -10,13 +10,15 @@ import Foundation
 import Firebase
 
 
-class Crew {
-    
+class Crew: Identifiable, Hashable {
+        
     // MARK: Properties
     
+    var id = UUID()
     var eventRef: DocumentReference?
     var eventId: String = ""
-    var crewId: DocumentReference?
+    var crewRef: DocumentReference?
+    var index: UInt?
     var division: Int?
     var crewScheduledTime: Date?
     var crewNumber: Int = 0
@@ -69,7 +71,7 @@ class Crew {
         self.recordedTimes=recordedTimes
     }
     
-    //MARK: Initializers for creating a crew from the Dictionary that somes back from Firestore
+    //MARK: Initializers for creating a crew from the Dictionary that comes back from Firestore
     
     init(fromServerCrew docSnapshot: DocumentSnapshot, eventId: String, eventRef: DocumentReference) {
         let value = docSnapshot.data() //is a Dictionary String
@@ -78,7 +80,29 @@ class Crew {
         // for required values set a default: self.testC = dictionary["testC"] as? String ?? "default"
         self.eventRef=eventRef
         self.eventId=eventId
-        self.crewId=docSnapshot.reference
+        self.crewRef=docSnapshot.reference
+        self.crewNumber = value["crewNumber"] as? Int ?? 0
+        self.division = value["division"] as? Int
+        self.crewScheduledTime=value["crewScheduledTime"] as? Date
+        self.crewName=value["crewName"] as? String ?? "Name Error"
+        self.picFile=value["picFile"] as? String
+        self.category=value["category"] as? String ?? "error"
+        self.rowerCount=value["rowerCount"] as? Int ?? 0
+        self.cox=value["cox"] as? String
+        self.rowers=value["rowers"] as? [String]
+        self.endTimeLocal=value["endTimeLocal"] as? Date
+        self.startTimeLocal=value["startTimeLocal"] as? Date
+        self.stageTimes=value["stageTimes"] as? Dictionary
+        self.recordedTimes=value["recordedTimes"] as? [RecordedTime]
+    }
+    
+    init(fromServerCrew docSnapshot: DocumentSnapshot, eventId: String) {
+        let value = docSnapshot.data() //is a Dictionary String
+        // Conversion from string based dictionary follows pattern:
+        // for optional values: self.testA = dictionary["testA"] as? String
+        // for required values set a default: self.testC = dictionary["testC"] as? String ?? "default"
+        self.eventId=eventId
+        self.crewRef=docSnapshot.reference
         self.crewNumber = value["crewNumber"] as? Int ?? 0
         self.division = value["division"] as? Int
         self.crewScheduledTime=value["crewScheduledTime"] as? Date
@@ -96,6 +120,23 @@ class Crew {
     
     
     // MARK: Public Methods for crew
+    // Make Equatable
+    static func == (lhs: Crew, rhs: Crew) -> Bool{
+           return ObjectIdentifier(lhs) == ObjectIdentifier(rhs)
+    }
+    
+    //make Hashable
+    public func hash(into hasher: inout Hasher) {
+         hasher.combine(ObjectIdentifier(self).hashValue)
+    }
+
+    // `hashValue` is deprecated starting Swift 4.2, but if you use
+    // earlier versions, then just override `hashValue`.
+    //
+    // public var hashValue: Int {
+    //    return ObjectIdentifier(self).hashValue
+    // }
+
     
     // update the crew object from new information recieved from the server.  Not initialising - updating
     func updateCrewFromServer (fromServerCrew docSnapshot: DocumentSnapshot) {
@@ -113,10 +154,40 @@ class Crew {
         self.rowerCount=value["rowerCount"] as? Int ?? 0
         self.cox=value["cox"] as? String
         self.rowers=value["rower1"] as? [String]
-        self.endTimeLocal=value["endTimeLocal"] as? Date
-        self.startTimeLocal=value["startTimeLocal"] as? Date
+        //don't update the start and end time as these are updated when the recorded times are processed and already contain the results of the processing of these times
+        //self.endTimeLocal=value["endTimeLocal"] as? Date
+        //self.startTimeLocal=value["startTimeLocal"] as? Date
         self.stageTimes=value["stageTimes"] as? Dictionary
         // do not update the Times as this is a crew data update only
+    }
+    
+    func writeToFirestore(inDatabase: Firestore) {
+        // Add a new document in collection "Crews"
+        inDatabase.collection("Events").document(self.eventId).collection("Crews").addDocument(data:
+            ["crewNumber":self.crewNumber as Any,
+             "division":self.division as Any,
+             "crewScheduledTime":self.crewScheduledTime as Any,
+             "crewName":self.crewName,
+             "picFile":self.picFile as Any,
+             "category":self.category,
+             "rowerCount":self.rowerCount,
+             "rower1":self.rowers as Any,
+             "cox": self.cox as Any,
+             "stageTimes": self.stageTimes as Any,
+             "timestamp":FieldValue.serverTimestamp()]) { err in if let err = err {
+                    print("Error writing crew document: \(err)") } else
+             {
+                    print("Crew document successfully written!")
+             }
+        }
+    }
+    
+    func addTime(FirestoreDb: Firestore, time: Date, stage: Int) {
+        
+        let recordedTime1 = RecordedTime(crewNumber: Int(self.crewNumber), eventId: self.eventId,  obsType: 0, stage: stage, time: time, timeId: "RC1")
+        
+        recordedTime1!.writeToFirestore(toCrew: self, inDatabase: FirestoreDb)
+
     }
     
     

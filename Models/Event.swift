@@ -22,17 +22,18 @@ class Event: NSObject {
     var eventStages: [Stage] = []
     var timeRecorders: [String] = []
     
-    init?(eventId: String, eventDate: String, eventName: String, eventImage: String, eventDesc: String, eventStages: [Stage], timeRecorders: [String]){
+    //Mark: Initializers
+    
+    init?(eventId: String, eventDate: String, eventName: String, eventImage: String, eventDesc: String){
         self.eventId=eventId
         self.eventDate=eventDate
         self.eventName=eventName
         self.eventImage=eventImage
         self.eventDesc=eventDesc
-        self.eventStages=eventStages
-        self.timeRecorders=timeRecorders
+        self.eventStages=[Stage(label: "Start", stageIndex: 0), Stage(label: "Finish", stageIndex: 1)]
+        self.timeRecorders=["none"]
         
     }
-    
     
     init(fromServerEvent docSnapshot: DocumentSnapshot){
         let value = docSnapshot.data() //is a Dictionary String
@@ -45,18 +46,33 @@ class Event: NSObject {
         self.eventName=value["eventName"] as? String ?? ""
         self.eventImage=value["eventImage"] as? String ?? ""
         self.eventDesc=value["eventDesc"] as? String ?? ""
-        self.eventStages = value["eventStages"] as? [Stage] ?? [] //default is that there is a start and finish line
+        self.eventStages = value["eventStages"] as? [Stage] ?? [Stage(label: "Start", stageIndex: 0), Stage(label: "Finish", stageIndex: 1)] //default is that there is a start and finish line
         self.timeRecorders=value["timeRecorders"] as? [String] ?? ["none"]
     }
     
-}
-
-struct Stage {
-    var label: String
-    var stageIndex: Int
+    // Method to Write to the Database
     
-    init?(label: String, stageIndex: Int){
-        self.label=label
-        self.stageIndex=stageIndex
+    func writeToFirestore(eventId: String, inDatabase: Firestore) {
+        // write (TODO: or update) the current Event to the Firestore Database
+        inDatabase.collection("Events").addDocument(data: [
+            "eventId":self.eventId,
+            "eventDate":self.eventDate,
+            "eventName":self.eventName,
+            "eventImage":self.eventImage,
+            "eventDesc":self.eventDesc,
+            "eventStages":self.eventStages,
+            "timestamp":FieldValue.serverTimestamp()]) { err in
+                if let err = err {
+                    print("Error writing time document: \(err)")
+                } else {
+                    print("Time document successfully written!")
+                }
+        }
+    }
+
+    struct Stage {
+        var label: String
+        var stageIndex: Int
+
     }
 }

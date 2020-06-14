@@ -1,9 +1,9 @@
 //
-//  CrewDataGetter.swift
+//  TestCrewListener.swift
 //  RowTime
 //
-//  Created by Paul Ventisei on 07/06/2016.
-//  Copyright © 2016 Paul Ventisei. All rights reserved.
+//  Created by Paul Ventisei on 09/06/2020.
+//  Copyright © 2020 Paul Ventisei. All rights reserved.
 //
 
 import Foundation
@@ -12,14 +12,13 @@ import Combine
 
 
 @available(iOS 13.0, *)
-class CrewData: NSObject, ObservableObject, UpdateableFromFirestoreListener{
+class TestCrewListener: NSObject, ObservableObject, UpdateableFromFirestoreListener{
 
     let FirestoreDb = Firestore.firestore();
         
     @Published var crewlist: [Crew] = []
     
     var timeData = TimeData()
-    var delegate: UpdateableFromFirestoreListener? = nil
 
     private var eventId: String = ""
     private var eventRef: DocumentReference?
@@ -29,18 +28,18 @@ class CrewData: NSObject, ObservableObject, UpdateableFromFirestoreListener{
     
     override init() {
         super.init()
+        self.setCrewListener(forEventId: "2lryLSYS9KPf6D123VUo")
     }
     
     init(crews: [Crew]) {
         crewlist = crews
     }
     
-    func setCrewListener(forEvent: Event) {
+    func setCrewListener(forEventId: String) {
         
         //set the eventId to the newEventId and then process an update of the model
         
-        eventId = forEvent.eventId
-        eventRef = forEvent.eventRef
+        eventId = forEventId
 
         // 1. read all the crews for the selected event from Firebase and set a listener.
         // 2. set this object as the delegate for TimeData service which will be called when the crews have been recieved.
@@ -65,10 +64,9 @@ class CrewData: NSObject, ObservableObject, UpdateableFromFirestoreListener{
                 print("Error fetching Crews: \(error!)")
                 return
             }
-            self.delegate?.willUpdateModel() //tell the delegate that the model is about to be updated
             for data in snapshot.documentChanges {
                     if (data.type == .added) {
-                        let newCrew = Crew(fromServerCrew: data.document, eventId: self.eventId, eventRef: self.eventRef!)
+                        let newCrew = Crew(fromServerCrew: data.document, eventId: self.eventId)
                         self.crewlist.insert(newCrew, at: Int(data.newIndex))
                         print("Firestore crew data added: \(String(describing: newCrew))")
                     }
@@ -93,7 +91,7 @@ class CrewData: NSObject, ObservableObject, UpdateableFromFirestoreListener{
                     }
 
                 }
-            self.delegate?.didUpdateModel()
+            self.objectWillChange.send()
             }
         }
 
@@ -101,13 +99,13 @@ class CrewData: NSObject, ObservableObject, UpdateableFromFirestoreListener{
     // These are the protocols as a firebaseListenerDelegate
     func willUpdateModel() {
         //tell our own delegate that the model is about to update
-        delegate?.willUpdateModel()
+        self.objectWillChange.send()
     }
  
     func didUpdateModel() { //called when the times model is updated as this is the delegate for managing reading times
         
         self.processTimes(timeData.newTimes, crews: self.crewlist)
-        delegate?.didUpdateModel() //tell our own delegate that the model updated
+        self.objectWillChange.send()
 
         
     }

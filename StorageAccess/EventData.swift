@@ -4,7 +4,7 @@
 //
 //  This object provides gets a the list of events and sets up a listener for changes to the Firestore database and chaches that hold the data.
 //
-//  It uses the protocol and delegate design approcah to provide communication on update events to the delegate
+//  It uses the protocol and delegate design approach to provide communication on update events to the delegate
 //
 //  Created by Paul Ventisei on 06/06/2016.
 //  Copyright © 2016 Paul Ventisei. All rights reserved.
@@ -26,13 +26,13 @@ class EventData: NSObject {
     private let appDelegate = UIApplication.shared.delegate as! AppDelegate
     private var eventListener: ListenerRegistration?
 
-    func stopListening() { //function called to stop any listener before the crewData object goes out of scope
+    func stopListening() { //function called to stop any listener before the eventData object goes out of scope
         if eventListener != nil {eventListener!.remove()}
         
     }
     func loadEvents() {
         //PV: a method for loading Events from FireStore for the Events Collection
-        // add a listener to the firestore database
+        // and add a listener to the firestore database
         FirestoreDb.collection("Events").order(by: "eventDate").addSnapshotListener { snapshot, error in
             self.delegate?.willUpdateModel() //tell the delegate that the model is about to be updated
             var newItems: [Event] = []
