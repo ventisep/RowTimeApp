@@ -21,6 +21,7 @@ class EventViewController: UIViewController {
     //eventImage uses an ImagePicker class to help get images from the user
     @IBOutlet weak var eventImage: UIImageView!
     var imagePicker: ImagePicker!
+    var eventImageFileName: String?
 
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
@@ -44,11 +45,10 @@ class EventViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if saveButton == sender as? UIBarButtonItem {
             print("segue after pressing the save button")
-            let eventImageFileName = "holdingtext.jpg"
             //need to create and upload file reference here
             let event = Event(eventId: eventID.text!, eventDate: eventDate.date.description, eventName: eventName.text!, eventImageName:
-                eventImageFileName, eventImage: eventImage, eventDesc: eventDescription.text!)
-            event?.writeToFirestore(eventId: eventID.text!, inDatabase: FirestoreDb)
+                eventImageFileName ?? "", eventImage: eventImage, eventDesc: eventDescription.text!)
+            event?.writeToFirestore(inDatabase: FirestoreDb)
         }
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
@@ -58,7 +58,8 @@ class EventViewController: UIViewController {
 
 extension EventViewController: ImagePickerDelegate {
     
-    func didSelect(image: UIImage?) {
+    func didSelect(image: UIImage?, imageName: String?) {
         self.eventImage.image = image
+        self.eventImageFileName = imageName
     }
 }

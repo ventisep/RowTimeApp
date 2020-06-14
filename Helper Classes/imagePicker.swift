@@ -10,7 +10,7 @@
 import UIKit
 
 public protocol ImagePickerDelegate: class {
-    func didSelect(image: UIImage?)
+    func didSelect(image: UIImage?, imageName: String?)
 }
 
 open class ImagePicker: NSObject {
@@ -68,25 +68,31 @@ open class ImagePicker: NSObject {
         self.presentationController?.present(alertController, animated: true)
     }
     
-    private func pickerController(_ controller: UIImagePickerController, didSelect image: UIImage?) {
+    private func pickerController(_ controller: UIImagePickerController, didSelect image: UIImage?, imageName: String?) {
         controller.dismiss(animated: true, completion: nil)
         
-        self.delegate?.didSelect(image: image)
+        self.delegate?.didSelect(image: image, imageName: imageName)
     }
 }
 
 extension ImagePicker: UIImagePickerControllerDelegate {
     
     public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        self.pickerController(picker, didSelect: nil)
+        self.pickerController(picker, didSelect: nil, imageName: nil)
     }
     
     public func imagePickerController(_ picker: UIImagePickerController,
                                       didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         guard let image = info[.editedImage] as? UIImage else {
-            return self.pickerController(picker, didSelect: nil)
+            return self.pickerController(picker, didSelect: nil, imageName: nil)
         }
-        self.pickerController(picker, didSelect: image)
+        guard let imageURL = info[.referenceURL] as? NSURL else {
+            return self.pickerController(picker, didSelect: nil, imageName: nil)
+        }
+
+        let imageName = imageURL.pathComponents?.last
+        
+        self.pickerController(picker, didSelect: image, imageName: imageName)
     }
 }
 

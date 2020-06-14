@@ -58,7 +58,6 @@ class StartViewController: UIViewController, UITextFieldDelegate {
             // pass the selected event code to the view controller
             if let destinationVC = segue.destination as? UINavigationController {
                 let rootVC = destinationVC.children[0] as! CrewTableViewController
-                rootVC.eventId = eventCode.text!
                 rootVC.event = sender as? Event
             }
         }

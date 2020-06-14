@@ -344,6 +344,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		068B2EB52496A69200F8069B /* SwiftUI Views */ = {
+			isa = PBXGroup;
+			children = (
+				06B71273248402E400EA41B8 /* CrewListView.swift */,
+				068B2EB324927FFD00F8069B /* CrewDetailView.swift */,
+			);
+			path = "SwiftUI Views";
+			sourceTree = "<group>";
+		};
 		0691ADBE22B51C41000D964D /* StorageAccess */ = {
 			isa = PBXGroup;
 			children = (
@@ -359,8 +368,6 @@
 			isa = PBXGroup;
 			children = (
 				DADB02FC1CE3DD49003D0C27 /* EventTableViewCell.swift */,
-				06B71273248402E400EA41B8 /* CrewListView.swift */,
-				068B2EB324927FFD00F8069B /* CrewDetailView.swift */,
 				DA46D9531CDF7A3A0098D3D5 /* CrewTableViewCell.swift */,
 				DA04B7521CF36A8A00EF570F /* TimeTableViewCell.swift */,
 				DA46D9501CDF7A3A0098D3D5 /* RatingControl.swift */,
@@ -406,6 +413,7 @@
 				06BAC66724686A6600290E94 /* Helper Classes */,
 				0691ADBE22B51C41000D964D /* StorageAccess */,
 				DA39964621581ADB00A95EC4 /* Models */,
+				068B2EB52496A69200F8069B /* SwiftUI Views */,
 				0691ADC222B6216B000D964D /* Views */,
 				DA78F0861CDF77E900220E65 /* RowTime Controllers */,
 				DA78F09E1CDF77E900220E65 /* RowTimeTests */,

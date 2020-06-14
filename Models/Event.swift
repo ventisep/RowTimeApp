@@ -55,7 +55,7 @@ class Event: NSObject, Identifiable {
     
     // Method to Write to the Database
     
-    func writeToFirestore(eventId: String, inDatabase: Firestore) {
+    func writeToFirestore(inDatabase: Firestore) {
         // write (TODO: or update) the current Event to the Firestore Database
         inDatabase.collection("Events").addDocument(data: [
             "eventId":self.eventId as Any,
@@ -70,7 +70,9 @@ class Event: NSObject, Identifiable {
                 } else {
                     print("Event document successfully written!")
                     let ref=Files.imageReference(imageName: self.eventImageName)
-                    ref.putData((self.eventImage?.image?.jpegData(compressionQuality: 1))!)
+                    let metadata = StorageMetadata()
+                    metadata.contentType = "image/jpeg"
+                    ref.putData((self.eventImage?.image?.jpegData(compressionQuality: 1))!, metadata: metadata)
                 }
         }
     }

@@ -29,7 +29,6 @@ class CrewListener: NSObject, ObservableObject, UpdateableFromFirestoreListener{
     
     override init() {
         super.init()
-        self.setCrewListener(forEventId: "2lryLSYS9KPf6D123VUo")
     }
     
     init(crews: [Crew]) {
@@ -93,6 +92,7 @@ class CrewListener: NSObject, ObservableObject, UpdateableFromFirestoreListener{
 
                 }
             self.objectWillChange.send()
+            self.delegate?.didUpdateModel()
             }
         }
 
