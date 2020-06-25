@@ -14,7 +14,6 @@ import Firebase
 import Combine
 
 
-
 protocol UpdateableFromFirestoreListener {
     func didUpdateModel()
     func willUpdateModel()

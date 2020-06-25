@@ -14,6 +14,7 @@
 		06280C6324558F20004D4BDC /* libPods-RowTime.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 06280C6224558F20004D4BDC /* libPods-RowTime.a */; };
 		06280C65245590CD004D4BDC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA78F0871CDF77E900220E65 /* AppDelegate.swift */; };
 		068B2EB424927FFD00F8069B /* CrewDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068B2EB324927FFD00F8069B /* CrewDetailView.swift */; };
+		068B2EB92498171F00F8069B /* Color.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 068B2EB82498171F00F8069B /* Color.xcassets */; };
 		068C78B22276062F00771258 /* EventListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA17C99B1D06148000C79F07 /* EventListener.swift */; };
 		068C78B42276063500771258 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA78F0871CDF77E900220E65 /* AppDelegate.swift */; };
 		068C78B62276063D00771258 /* EventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADB02F71CE3B48B003D0C27 /* EventTableViewController.swift */; };
@@ -183,6 +184,7 @@
 		06280C6224558F20004D4BDC /* libPods-RowTime.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libPods-RowTime.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		06280C6424558FF7004D4BDC /* ToDo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToDo.h; sourceTree = "<group>"; };
 		068B2EB324927FFD00F8069B /* CrewDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrewDetailView.swift; sourceTree = "<group>"; };
+		068B2EB82498171F00F8069B /* Color.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Color.xcassets; sourceTree = "<group>"; };
 		068C78C4227637C800771258 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0691ADC322B622DC000D964D /* Crew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crew.swift; sourceTree = "<group>"; };
 		0691ADC622B622FD000D964D /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
@@ -448,6 +450,7 @@
 				DADB032C1CED013B003D0C27 /* logo.jpg */,
 				DA78F0961CDF77E900220E65 /* Info.plist */,
 				DA78F0911CDF77E900220E65 /* Assets.xcassets */,
+				068B2EB82498171F00F8069B /* Color.xcassets */,
 				DACC84281CFF72540004F275 /* blade-icons */,
 			);
 			name = "RowTime Controllers";
@@ -746,6 +749,7 @@
 				DACC84F11D04D2910004F275 /* Main.storyboard in Resources */,
 				DA78F0921CDF77E900220E65 /* Assets.xcassets in Resources */,
 				DACC84A91CFF72540004F275 /* ham.gif in Resources */,
+				068B2EB92498171F00F8069B /* Color.xcassets in Resources */,
 				DACC84E11CFF72540004F275 /* trc.gif in Resources */,
 				DACC84A51CFF72540004F275 /* fal.gif in Resources */,
 				DACC84EA1CFF72540004F275 /* xpr.gif in Resources */,

@@ -24,7 +24,6 @@ class CrewListener: NSObject, ObservableObject, UpdateableFromFirestoreListener{
     private var eventId: String = ""
     private var eventRef: DocumentReference?
 
-    //private let appDelegate = UIApplication.shared.delegate as! AppDelegate
     private var crewListener: ListenerRegistration?
     
     override init() {
@@ -37,7 +36,8 @@ class CrewListener: NSObject, ObservableObject, UpdateableFromFirestoreListener{
     
     func setCrewListener(forEventId: String) {
         
-        //set the eventId to the newEventId and then process an update of the model
+        //set the eventId to the newEventId and then process an update of the model if the listener is not already in train
+        
         if crewListener == nil {
             eventId = forEventId
 
